@@ -35,7 +35,7 @@
         type = "lua";
         config = ''
           require("tokyonight").setup({
-            style = "night",   -- "storm" | "night" | "moon" | "day"
+            style = "night",
           })
           vim.cmd.colorscheme("tokyonight")
         '';
@@ -51,6 +51,17 @@
       }
       plenary-nvim # dependency of telescope and others
       nvim-web-devicons # File icons
+      {
+        plugin = lualine-nvim;
+        type = "lua";
+        config = ''
+          require("lualine").setup({
+            options = {
+              theme = "auto",
+            },
+          })
+        '';
+      }
       {
         plugin = telescope-frecency-nvim;
         type = "lua";
