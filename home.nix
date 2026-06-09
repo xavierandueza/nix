@@ -47,11 +47,21 @@
           local builtin = require("telescope.builtin")
           vim.keymap.set("n", "<leader>sg", builtin.live_grep, { desc = "Grep" })
           vim.keymap.set("n", "<leader>sS", builtin.lsp_dynamic_workspace_symbols, { desc = "Workspace symbols" })
-          vim.keymap.set("n", "<leader><leader>", builtin.find_files, { desc = "Find files" })
         '';
       }
       plenary-nvim # dependency of telescope and others
       nvim-web-devicons # File icons
+      {
+        plugin = telescope-frecency-nvim;
+        type = "lua";
+        config = ''
+          require("telescope").load_extension("frecency")
+          -- frecency is now the default file finder, scoped to the current project
+          vim.keymap.set("n", "<leader><leader>", function()
+            require("telescope").extensions.frecency.frecency({ workspace = "CWD" })
+          end, { desc = "Find files (frecency)" })
+        '';
+      }
       {
         plugin = conform-nvim;
         type = "lua";
