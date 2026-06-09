@@ -58,6 +58,13 @@
           require("gitsigns").setup()
         '';
       }
+      {
+        plugin = todo-comments-nvim;
+        type = "lua";
+        config = ''
+          require("todo-comments").setup()
+        '';
+      }
       # completion sources — loaded before nvim-cmp so it can find them
       cmp-nvim-lsp # LSP completion (inert until a language server is attached)
       cmp-path # filesystem path completion
@@ -164,6 +171,12 @@
       vim.opt.number = true
       vim.opt.relativenumber = true
       vim.opt.termguicolors = true
+
+      -- show diagnostic messages inline, at the end of the line
+      vim.diagnostic.config({
+        virtual_text = true, -- the inline message text
+        severity_sort = true, -- errors rank above warnings on shared lines
+      })
     '';
   };
 
