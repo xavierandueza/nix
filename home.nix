@@ -58,6 +58,38 @@
           require("gitsigns").setup()
         '';
       }
+      # completion sources — loaded before nvim-cmp so it can find them
+      cmp-nvim-lsp # LSP completion (inert until a language server is attached)
+      cmp-path # filesystem path completion
+      cmp-buffer # words from the current buffer
+      {
+        plugin = nvim-cmp;
+        type = "lua";
+        config = ''
+          local cmp = require("cmp")
+          cmp.setup({
+            snippet = {
+              -- Neovim's built-in snippet engine (0.10+), no extra plugin needed
+              expand = function(args)
+                vim.snippet.expand(args.body)
+              end,
+            },
+            mapping = cmp.mapping.preset.insert({
+              ["<C-Space>"] = cmp.mapping.complete(), -- manually trigger completion
+              ["<C-e>"] = cmp.mapping.abort(), -- dismiss the menu
+              ["<CR>"] = cmp.mapping.confirm({ select = false }), -- confirm (only if explicitly selected)
+              ["<C-j>"] = cmp.mapping.select_next_item(),
+              ["<C-k>"] = cmp.mapping.select_prev_item(),
+            }),
+            sources = cmp.config.sources({
+              { name = "nvim_lsp" },
+              { name = "path" },
+            }, {
+              { name = "buffer" },
+            }),
+          })
+        '';
+      }
       {
         plugin = lualine-nvim;
         type = "lua";
