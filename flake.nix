@@ -50,7 +50,7 @@
 
         system.keyboard = {
           enableKeyMapping = true;
-          swapLeftCtrlAndFn = true;
+          # swapLeftCtrlAndFn = true;
           userKeyMapping = [
             {
               HIDKeyboardModifierMappingSrc = 30064771129; # Caps Lock (0x700000039)
