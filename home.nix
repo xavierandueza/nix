@@ -52,6 +52,13 @@
       plenary-nvim # dependency of telescope and others
       nvim-web-devicons # File icons
       {
+        plugin = gitsigns-nvim;
+        type = "lua";
+        config = ''
+          require("gitsigns").setup()
+        '';
+      }
+      {
         plugin = lualine-nvim;
         type = "lua";
         config = ''
