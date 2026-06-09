@@ -2,7 +2,7 @@
 {
   home.username = "xavier";
   home.homeDirectory = "/Users/xavier";
-  home.stateVersion = "24.11";   # set once, don't bump casually
+  home.stateVersion = "24.11"; # set once, don't bump casually
 
   # User packages (your CLI tools live here now, not systemPackages)
   home.packages = with pkgs; [
@@ -22,13 +22,13 @@
     plugins = with pkgs.vimPlugins; [
       (pkgs.vimPlugins.nvim-treesitter.withPlugins (p: [
         p.lua
-	p.nix
-	p.typescript
-	p.tsx
-	p.rust
-	p.bash
-	p.markdown
-	p.javascript
+        p.nix
+        p.typescript
+        p.tsx
+        p.rust
+        p.bash
+        p.markdown
+        p.javascript
       ]))
       {
         plugin = tokyonight-nvim;
@@ -52,6 +52,40 @@
       }
       plenary-nvim # dependency of telescope and others
       nvim-web-devicons # File icons
+      {
+        plugin = conform-nvim;
+        type = "lua";
+        config = ''
+          require("conform").setup({
+            formatters_by_ft = {
+              nix = { "nixfmt" },
+            },
+            format_on_save = {
+              timeout_ms = 2000,
+              lsp_format = "fallback",
+            },
+          })
+        '';
+      }
+      {
+        plugin = nvim-lint;
+        type = "lua";
+        config = ''
+          require("lint").linters_by_ft = {
+            nix = { "statix", "deadnix" },
+          }
+          -- generic: re-lint on the events where diagnostics should refresh
+          vim.api.nvim_create_autocmd({ "BufWritePost", "BufReadPost", "InsertLeave" }, {
+            callback = function() require("lint").try_lint() end,
+          })
+        '';
+      }
+    ];
+    # Tools wrapped onto neovim's own PATH so conform/nvim-lint always find them.
+    extraPackages = with pkgs; [
+      nixfmt-rfc-style
+      statix
+      deadnix
     ];
     initLua = ''
       vim.g.mapleader = " "
@@ -59,16 +93,23 @@
       vim.opt.number = true
       vim.opt.relativenumber = true
       vim.opt.termguicolors = true
-      '';
+    '';
   };
 
-  programs.atuin = { enable = true; enableBashIntegration = true; };
-  programs.zoxide = { enable = true; enableBashIntegration = true; options = [ "--cmd cd" ]; };
-  programs.oh-my-posh = { 
+  programs.atuin = {
     enable = true;
-    enableBashIntegration = true; 
+    enableBashIntegration = true;
+  };
+  programs.zoxide = {
+    enable = true;
+    enableBashIntegration = true;
+    options = [ "--cmd cd" ];
+  };
+  programs.oh-my-posh = {
+    enable = true;
+    enableBashIntegration = true;
     useTheme = "amro";
-    };
+  };
 
   programs.bash = {
     enable = true;
