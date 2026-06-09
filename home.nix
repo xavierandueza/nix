@@ -59,6 +59,17 @@
             options = {
               theme = "auto",
             },
+            sections = {
+              -- left: two items
+              lualine_a = { "mode" },
+              lualine_b = { "branch" },
+              lualine_c = {},
+              -- right: two items (filetype in the medium "branch" styling,
+              -- filename in the bright styling line:col used to have)
+              lualine_x = {},
+              lualine_y = { "filetype" },
+              lualine_z = { "filename" },
+            },
           })
         '';
       }
