@@ -144,6 +144,15 @@
           port = 6379;
         };
 
+        # Resolve readme.local and all *.readme.local subdomains to localhost.
+        services.dnsmasq = {
+          enable = true;
+          bind = "127.0.0.1";
+          addresses = {
+            "readme.local" = "127.0.0.1";
+          };
+        };
+
         fonts.packages = [
           pkgs.nerd-fonts.jetbrains-mono
         ];
