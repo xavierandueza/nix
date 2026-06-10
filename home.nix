@@ -77,6 +77,14 @@
           vim.keymap.set("n", "<leader>gr", "<cmd>Octo search is:open is:pr review-requested:@me<cr>", { desc = "PRs awaiting my review (Octo)" })
         '';
       }
+      {
+        plugin = lazygit-nvim;
+        type = "lua";
+        config = ''
+          -- :LazyGit opens in a floating window over the current buffer by default
+          vim.keymap.set("n", "<leader>gg", "<cmd>LazyGit<cr>", { desc = "LazyGit (floating)" })
+        '';
+      }
       # completion sources — loaded before nvim-cmp so it can find them
       cmp-nvim-lsp # LSP completion (inert until a language server is attached)
       cmp-path # filesystem path completion
