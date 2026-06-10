@@ -83,6 +83,18 @@
         plugin = telescope-nvim;
         type = "lua";
         config = ''
+          local actions = require("telescope.actions")
+          require("telescope").setup({
+            defaults = {
+              mappings = {
+                i = {
+                  ["<C-j>"] = actions.move_selection_next,
+                  ["<C-k>"] = actions.move_selection_previous,
+                },
+              },
+            },
+          })
+
           local builtin = require("telescope.builtin")
           vim.keymap.set("n", "<leader>sg", builtin.live_grep, { desc = "Grep" })
           vim.keymap.set("n", "<leader>sS", builtin.lsp_dynamic_workspace_symbols, { desc = "Workspace symbols" })
@@ -290,6 +302,27 @@
 
       -- open a new empty buffer in the current window
       vim.keymap.set("n", "<leader>fn", "<cmd>enew<cr>", { desc = "New empty buffer" })
+
+      -- half-page scroll, then recenter the cursor line (zz) so it stays mid-screen
+      vim.keymap.set("n", "<C-d>", "<C-d>zz", { desc = "Half page down (centered)" })
+      vim.keymap.set("n", "<C-u>", "<C-u>zz", { desc = "Half page up (centered)" })
+
+      -- yank file-path info about the current buffer to the system clipboard
+      vim.keymap.set("n", "<leader>ya", function()
+        local p = vim.fn.expand("%:p") -- absolute path
+        vim.fn.setreg("+", p)
+        vim.notify("Yanked abs path: " .. p)
+      end, { desc = "Yank absolute path" })
+      vim.keymap.set("n", "<leader>yr", function()
+        local p = vim.fn.expand("%:.") -- path relative to nvim's cwd (launch dir)
+        vim.fn.setreg("+", p)
+        vim.notify("Yanked relative path: " .. p)
+      end, { desc = "Yank relative path" })
+      vim.keymap.set("n", "<leader>yf", function()
+        local p = vim.fn.expand("%:t") -- filename only (tail)
+        vim.fn.setreg("+", p)
+        vim.notify("Yanked filename: " .. p)
+      end, { desc = "Yank filename" })
 
       -- briefly flash the yanked text (the LazyVim highlight-on-yank effect)
       vim.api.nvim_create_autocmd("TextYankPost", {
