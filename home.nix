@@ -47,6 +47,7 @@
           local builtin = require("telescope.builtin")
           vim.keymap.set("n", "<leader>sg", builtin.live_grep, { desc = "Grep" })
           vim.keymap.set("n", "<leader>sS", builtin.lsp_dynamic_workspace_symbols, { desc = "Workspace symbols" })
+          vim.keymap.set("n", "<leader>gb", builtin.git_bcommits, { desc = "File commits (blame)" })
         '';
       }
       plenary-nvim # dependency of telescope and others
@@ -63,6 +64,17 @@
         type = "lua";
         config = ''
           require("todo-comments").setup()
+        '';
+      }
+      {
+        plugin = octo-nvim;
+        type = "lua";
+        config = ''
+          require("octo").setup({
+            picker = "telescope", -- use the telescope you already have for octo's lists
+          })
+          -- list PRs awaiting my review; Enter opens the selected one in an octo buffer
+          vim.keymap.set("n", "<leader>gr", "<cmd>Octo search is:open is:pr review-requested:@me<cr>", { desc = "PRs awaiting my review (Octo)" })
         '';
       }
       # completion sources — loaded before nvim-cmp so it can find them
