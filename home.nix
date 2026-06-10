@@ -14,6 +14,7 @@
     docker # the CLI only — the daemon lives inside colima's VM
     docker-compose # Normal docker doesn't include the code from here
     nodejs_22
+    redis # redis-server + redis-cli
   ];
 
   programs.tmux = {
@@ -104,7 +105,6 @@
           require("octo").setup({
             picker = "telescope", -- use the telescope you already have for octo's lists
           })
-          -- list PRs awaiting my review; Enter opens the selected one in an octo buffer
           vim.keymap.set("n", "<leader>gr", "<cmd>Octo search is:open is:pr review-requested:@me<cr>", { desc = "PRs awaiting my review (Octo)" })
         '';
       }
@@ -202,6 +202,10 @@
         config = ''
           require("lint").linters_by_ft = {
             nix = { "statix", "deadnix" },
+            javascript = { "oxlint" },
+            javascriptreact = { "oxlint" },
+            typescript = { "oxlint" },
+            typescriptreact = { "oxlint" },
           }
           -- generic: re-lint on the events where diagnostics should refresh
           vim.api.nvim_create_autocmd({ "BufWritePost", "BufReadPost", "InsertLeave" }, {
@@ -215,6 +219,9 @@
       nixfmt-rfc-style
       statix
       deadnix
+      nixd # Nix LSP (completion/hover/go-to-def, nixpkgs/flake-aware)
+      vtsls # TypeScript/JavaScript LSP (tsserver wrapper)
+      oxlint # fast JS/TS linter (Rust); nvim-lint has a built-in parser for it
     ];
     initLua = ''
       vim.g.mapleader = " "
@@ -237,6 +244,41 @@
       vim.diagnostic.config({
         virtual_text = true, -- the inline message text
         severity_sort = true, -- errors rank above warnings on shared lines
+      })
+
+      local lsp_capabilities = require("cmp_nvim_lsp").default_capabilities()
+
+      vim.lsp.config("vtsls", {
+        cmd = { "vtsls", "--stdio" },
+        filetypes = {
+          "javascript",
+          "javascriptreact",
+          "typescript",
+          "typescriptreact",
+        },
+        root_markers = { "tsconfig.json", "jsconfig.json", "package.json", ".git" },
+        capabilities = lsp_capabilities,
+        settings = {
+          -- raise tsserver's heap ceiling (MB) so large repos don't OOM
+          typescript = { tsserver = { maxTsServerMemory = 24576 } },
+        },
+      })
+
+      vim.lsp.config("nixd", {
+        cmd = { "nixd" },
+        filetypes = { "nix" },
+        root_markers = { "flake.nix", ".git" },
+        capabilities = lsp_capabilities,
+      })
+
+      vim.lsp.enable({ "vtsls", "nixd" })
+
+      vim.api.nvim_create_autocmd("LspAttach", {
+        callback = function(args)
+          local opts = { buffer = args.buf }
+          vim.keymap.set("n", "gd", vim.lsp.buf.definition, opts)
+          vim.keymap.set("n", "gr", vim.lsp.buf.references, opts)
+        end,
       })
     '';
   };
