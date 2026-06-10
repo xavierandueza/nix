@@ -139,6 +139,11 @@
           width = 7.0;
         };
 
+        services.redis = {
+          enable = true;
+          port = 6379;
+        };
+
         fonts.packages = [
           pkgs.nerd-fonts.jetbrains-mono
         ];
