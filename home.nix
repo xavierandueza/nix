@@ -12,6 +12,18 @@
     gh
   ];
 
+  programs.tmux = {
+    enable = true;
+    keyMode = "vi";
+    mouse = true;
+    terminal = "tmux-256color";
+    extraConfig = ''
+      set -g allow-passthrough on
+      set -s extended-keys on
+      set -as terminal-features 'xterm*:extkeys'
+    '';
+  };
+
   programs.neovim = {
     enable = true;
     withRuby = false;
@@ -191,6 +203,9 @@
       vim.opt.number = true
       vim.opt.relativenumber = true
       vim.opt.termguicolors = true
+
+      -- open a new empty buffer in the current window
+      vim.keymap.set("n", "<leader>fn", "<cmd>enew<cr>", { desc = "New empty buffer" })
 
       -- show diagnostic messages inline, at the end of the line
       vim.diagnostic.config({
