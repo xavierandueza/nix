@@ -15,6 +15,8 @@
     docker-compose # Normal docker doesn't include the code from here
     nodejs_22
     redis # redis-server + redis-cli
+    ngrok
+    pnpm
   ];
 
   programs.tmux = {
