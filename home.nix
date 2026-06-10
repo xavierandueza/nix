@@ -146,15 +146,40 @@
       cmp-path # filesystem path completion
       cmp-buffer # words from the current buffer
       {
+        plugin = luasnip;
+        type = "lua";
+        config = ''
+          require("luasnip.loaders.from_vscode").lazy_load()
+
+          local ls = require("luasnip")
+          -- Tab: jump to the next snippet placeholder if one is active, else a normal Tab
+          vim.keymap.set({ "i", "s" }, "<Tab>", function()
+            if ls.expand_or_jumpable() then
+              ls.expand_or_jump()
+            else
+              return "<Tab>"
+            end
+          end, { expr = true, silent = true })
+          -- Shift-Tab: jump back to the previous placeholder
+          vim.keymap.set({ "i", "s" }, "<S-Tab>", function()
+            if ls.jumpable(-1) then
+              ls.jump(-1)
+            end
+          end, { silent = true })
+        '';
+      }
+      friendly-snippets # pure snippet data (VSCode JSON); LuaSnip's loader reads it
+      cmp_luasnip # bridges LuaSnip snippets into the nvim-cmp menu
+      {
         plugin = nvim-cmp;
         type = "lua";
         config = ''
           local cmp = require("cmp")
           cmp.setup({
             snippet = {
-              -- Neovim's built-in snippet engine (0.10+), no extra plugin needed
+              -- expand snippets with LuaSnip (so friendly-snippets work + Tab jumping)
               expand = function(args)
-                vim.snippet.expand(args.body)
+                require("luasnip").lsp_expand(args.body)
               end,
             },
             mapping = cmp.mapping.preset.insert({
@@ -166,6 +191,7 @@
             }),
             sources = cmp.config.sources({
               { name = "nvim_lsp" },
+              { name = "luasnip" },
               { name = "path" },
             }, {
               { name = "buffer" },
