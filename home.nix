@@ -13,6 +13,7 @@
     colima
     docker # the CLI only — the daemon lives inside colima's VM
     docker-compose # Normal docker doesn't include the code from here
+    nodejs_22
   ];
 
   programs.tmux = {
