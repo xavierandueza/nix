@@ -256,6 +256,11 @@
       vim.opt.termguicolors = true
       -- route yanks/deletes/pastes through the system clipboard (pbcopy/pbpaste on macOS)
       vim.opt.clipboard = "unnamedplus"
+      -- indent with spaces by default (matches what nixfmt/tsserver emit on save)
+      vim.opt.expandtab = true
+      vim.opt.shiftwidth = 2
+      vim.opt.tabstop = 2
+      vim.opt.softtabstop = 2
 
       -- open a new empty buffer in the current window
       vim.keymap.set("n", "<leader>fn", "<cmd>enew<cr>", { desc = "New empty buffer" })
