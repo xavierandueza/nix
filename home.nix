@@ -17,6 +17,7 @@
     redis # redis-server + redis-cli
     ngrok
     pnpm
+    caddy
   ];
 
   programs.tmux = {
@@ -109,7 +110,17 @@
         plugin = mini-nvim;
         type = "lua";
         config = ''
-          require("mini.ai").setup()
+          require("mini.ai").setup({
+            custom_textobjects = {
+              -- `g` = the whole buffer, so yag/dag/cag/vig act on the entire file
+              g = function()
+                local from = { line = 1, col = 1 }
+                local last = vim.fn.line("$")
+                local to = { line = last, col = math.max(vim.fn.getline(last):len(), 1) }
+                return { from = from, to = to }
+              end,
+            },
+          })
         '';
       }
       {
@@ -243,6 +254,8 @@
       vim.opt.number = true
       vim.opt.relativenumber = true
       vim.opt.termguicolors = true
+      -- route yanks/deletes/pastes through the system clipboard (pbcopy/pbpaste on macOS)
+      vim.opt.clipboard = "unnamedplus"
 
       -- open a new empty buffer in the current window
       vim.keymap.set("n", "<leader>fn", "<cmd>enew<cr>", { desc = "New empty buffer" })
