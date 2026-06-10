@@ -104,6 +104,16 @@
       plenary-nvim # dependency of telescope and others
       nvim-web-devicons # File icons
       {
+        plugin = nvim-autopairs;
+        type = "lua";
+        config = ''
+          require("nvim-autopairs").setup({})
+          -- when you confirm a function completion in cmp, also insert the ()
+          local cmp_autopairs = require("nvim-autopairs.completion.cmp")
+          require("cmp").event:on("confirm_done", cmp_autopairs.on_confirm_done())
+        '';
+      }
+      {
         plugin = gitsigns-nvim;
         type = "lua";
         config = ''
@@ -328,6 +338,24 @@
       vim.api.nvim_create_autocmd("TextYankPost", {
         callback = function()
           vim.hl.on_yank()
+        end,
+      })
+
+      -- auto-reload buffers when the file changes on disk (e.g. edited by another tool).
+      -- autoread does the actual reload; these events poke nvim to re-check the disk.
+      vim.opt.autoread = true
+      vim.api.nvim_create_autocmd({ "FocusGained", "BufEnter", "CursorHold", "CursorHoldI" }, {
+        callback = function()
+          -- don't fight the command-line window; only check normal buffers
+          if vim.fn.getcmdwintype() == "" then
+            vim.cmd("checktime")
+          end
+        end,
+      })
+      -- tell me when a buffer got reloaded out from under me
+      vim.api.nvim_create_autocmd("FileChangedShellPost", {
+        callback = function()
+          vim.notify("Buffer reloaded — file changed on disk", vim.log.levels.WARN)
         end,
       })
 
