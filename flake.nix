@@ -70,6 +70,7 @@
 
           # GUI
           pkgs.slack
+          pkgs.mongodb-compass
         ];
 
         services.aerospace = {
