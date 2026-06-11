@@ -289,7 +289,7 @@
     ];
     # Tools wrapped onto neovim's own PATH so conform/nvim-lint always find them.
     extraPackages = with pkgs; [
-      nixfmt-rfc-style
+      nixfmt
       statix
       deadnix
       nixd # Nix LSP (completion/hover/go-to-def, nixpkgs/flake-aware)
@@ -428,6 +428,31 @@
   programs.lazygit = {
     enable = true;
     enableBashIntegration = true;
+  };
+
+  programs.ssh = {
+    enable = true;
+    enableDefaultConfig = false;
+    settings."*" = {
+      identityFile = "~/.ssh/id_ed25519";
+      UseKeychain = "yes";
+      AddKeysToAgent = "yes";
+    };
+  };
+
+  programs.git = {
+    enable = true;
+    settings = {
+      user = {
+        name = "Xavier Andueza";
+        email = "xavier@lyratechnologies.com.au";
+      };
+    };
+    signing = {
+      format = "ssh";
+      key = "~/.ssh/id_ed25519.pub";
+      signByDefault = true;
+    };
   };
 
   # Make `docker compose` (the plugin subcommand) resolve to `docker-compose`
