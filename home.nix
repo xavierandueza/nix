@@ -103,6 +103,15 @@
       }
       plenary-nvim # dependency of telescope and others
       nvim-web-devicons # File icons
+      nui-nvim # UI component library; required dependency of noice
+      nvim-notify # popup notification backend that noice routes notifications through
+      {
+        plugin = noice-nvim;
+        type = "lua";
+        config = ''
+          require("noice").setup({})
+        '';
+      }
       {
         plugin = nvim-autopairs;
         type = "lua";
@@ -317,6 +326,12 @@
       vim.keymap.set("n", "<C-d>", "<C-d>zz", { desc = "Half page down (centered)" })
       vim.keymap.set("n", "<C-u>", "<C-u>zz", { desc = "Half page up (centered)" })
 
+      -- move between Neovim splits with Ctrl+h/j/k/l (handy for octo review diffs)
+      vim.keymap.set("n", "<C-h>", "<C-w>h", { desc = "Go to left split" })
+      vim.keymap.set("n", "<C-j>", "<C-w>j", { desc = "Go to lower split" })
+      vim.keymap.set("n", "<C-k>", "<C-w>k", { desc = "Go to upper split" })
+      vim.keymap.set("n", "<C-l>", "<C-w>l", { desc = "Go to right split" })
+
       -- yank file-path info about the current buffer to the system clipboard
       vim.keymap.set("n", "<leader>ya", function()
         local p = vim.fn.expand("%:p") -- absolute path
@@ -395,8 +410,10 @@
       vim.api.nvim_create_autocmd("LspAttach", {
         callback = function(args)
           local opts = { buffer = args.buf }
-          vim.keymap.set("n", "gd", vim.lsp.buf.definition, opts)
-          vim.keymap.set("n", "gr", vim.lsp.buf.references, opts)
+          local tb = require("telescope.builtin")
+          -- open definitions/references in Telescope instead of the quickfix list
+          vim.keymap.set("n", "gd", tb.lsp_definitions, opts)
+          vim.keymap.set("n", "gr", tb.lsp_references, opts)
         end,
       })
     '';
