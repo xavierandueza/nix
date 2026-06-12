@@ -18,6 +18,7 @@
     ngrok
     pnpm
     caddy
+    infisical
   ];
 
   programs.tmux = {
@@ -109,7 +110,18 @@
         plugin = noice-nvim;
         type = "lua";
         config = ''
+          require("notify").setup({ timeout = 3000 })
           require("noice").setup({})
+
+          require("telescope").load_extension("notify")
+
+          vim.keymap.set("n", "<leader>nd", function()
+            require("notify").dismiss({ silent = true, pending = true })
+          end, { desc = "Dismiss notifications" })
+
+          vim.keymap.set("n", "<leader>nh", function()
+            require("telescope").extensions.notify.notify()
+          end, { desc = "Notification history" })
         '';
       }
       {
@@ -190,13 +202,13 @@
             else
               return "<Tab>"
             end
-          end, { expr = true, silent = true })
+          end, { expr = true, silent = true, desc = "Expand snippet / jump to next placeholder" })
           -- Shift-Tab: jump back to the previous placeholder
           vim.keymap.set({ "i", "s" }, "<S-Tab>", function()
             if ls.jumpable(-1) then
               ls.jump(-1)
             end
-          end, { silent = true })
+          end, { silent = true, desc = "Jump to previous snippet placeholder" })
         '';
       }
       friendly-snippets # pure snippet data (VSCode JSON); LuaSnip's loader reads it
