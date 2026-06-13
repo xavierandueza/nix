@@ -489,6 +489,10 @@
     };
   };
 
+  programs.bottom = {
+    enable = true;
+  };
+
   # Make `docker compose` (the plugin subcommand) resolve to `docker-compose`
   home.file.".docker/cli-plugins/docker-compose".source = "${pkgs.docker-compose}/bin/docker-compose";
 
