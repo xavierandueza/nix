@@ -1,5 +1,21 @@
 {
   "nodes": {
+    "agents": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1781267204,
+        "narHash": "sha256-fVGZheu7IlpakO8CBeNqMkkCGfdmnBuhouqNrtslJ9k=",
+        "owner": "xavierandueza",
+        "repo": "agents",
+        "rev": "ccce85a247c3bf7936da71af893f20640bd2d66e",
+        "type": "github"
+      },
+      "original": {
+        "owner": "xavierandueza",
+        "repo": "agents",
+        "type": "github"
+      }
+    },
     "brew-src": {
       "flake": false,
       "locked": {
@@ -304,6 +320,7 @@
     },
     "root": {
       "inputs": {
+        "agents": "agents",
         "home-manager": "home-manager",
         "homebrew-cask": "homebrew-cask",
         "homebrew-core": "homebrew-core",

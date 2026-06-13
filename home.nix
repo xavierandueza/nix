@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, inputs, ... }:
 {
   home.username = "xavier";
   home.homeDirectory = "/Users/xavier";
@@ -20,6 +20,11 @@
     caddy
     infisical
   ];
+
+  # Global agent instructions
+  home.file.".claude/CLAUDE.md".source = inputs.agents + "/AGENTS.md";
+  home.file.".codex/AGENTS.md".source = inputs.agents + "/AGENTS.md";
+  home.file.".config/opencode/AGENTS.md".source = inputs.agents + "/AGENTS.md";
 
   programs.tmux = {
     enable = true;

@@ -7,6 +7,11 @@
     nix-darwin.inputs.nixpkgs.follows = "nixpkgs";
     mac-app-util.url = "github:hraban/mac-app-util";
 
+    agents = {
+      url = "github:xavierandueza/agents";
+      flake = false;
+    };
+
     # Home/User-based management
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
@@ -201,6 +206,7 @@
           {
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
+            home-manager.extraSpecialArgs = { inherit inputs; };
             home-manager.users.xavier = import ./home.nix;
           }
 
