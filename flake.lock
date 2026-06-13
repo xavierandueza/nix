@@ -3,11 +3,11 @@
     "agents": {
       "flake": false,
       "locked": {
-        "lastModified": 1781267204,
-        "narHash": "sha256-fVGZheu7IlpakO8CBeNqMkkCGfdmnBuhouqNrtslJ9k=",
+        "lastModified": 1781330015,
+        "narHash": "sha256-wKQiPYzpbLgMgxphRfIa/i7xFGM7iclaFMI/KnLlsss=",
         "owner": "xavierandueza",
         "repo": "agents",
-        "rev": "ccce85a247c3bf7936da71af893f20640bd2d66e",
+        "rev": "73747148f6ea300d7488e96a1880e2c117fa7399",
         "type": "github"
       },
       "original": {
