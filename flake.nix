@@ -68,6 +68,7 @@
           casks = [
             "zen"
             "steam"
+            "loom"
           ];
         };
 
