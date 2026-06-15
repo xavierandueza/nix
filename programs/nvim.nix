@@ -51,6 +51,25 @@
           vim.keymap.set("n", "<leader>gb", builtin.git_bcommits, { desc = "File commits (blame)" })
         '';
       }
+      {
+        plugin = which-key-nvim;
+        type = "lua";
+        config = ''
+          -- the popup appears timeoutlen ms after the prefix; default 1000 is sluggish
+          vim.o.timeout = true
+          vim.o.timeoutlen = 500
+          local wk = require("which-key")
+          wk.setup({})
+          -- label the leader prefixes so the popup groups them instead of listing raw keys
+          wk.add({
+            { "<leader>f", group = "file" },
+            { "<leader>g", group = "git" },
+            { "<leader>n", group = "notifications" },
+            { "<leader>s", group = "search/symbols" },
+            { "<leader>y", group = "yank" },
+          })
+        '';
+      }
       plenary-nvim # dependency of telescope and others
       nvim-web-devicons # File icons
       nui-nvim # UI component library; required dependency of noice
