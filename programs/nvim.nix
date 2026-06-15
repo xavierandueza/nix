@@ -46,6 +46,7 @@
 
           local builtin = require("telescope.builtin")
           vim.keymap.set("n", "<leader>sg", builtin.live_grep, { desc = "Grep" })
+          vim.keymap.set("n", "<leader>ss", builtin.lsp_document_symbols, { desc = "Document symbols" })
           vim.keymap.set("n", "<leader>sS", builtin.lsp_dynamic_workspace_symbols, { desc = "Workspace symbols" })
           vim.keymap.set("n", "<leader>gb", builtin.git_bcommits, { desc = "File commits (blame)" })
         '';
@@ -97,7 +98,6 @@
         '';
       }
       {
-        # mini.ai adds the "any quote/bracket" text objects
         plugin = mini-nvim;
         type = "lua";
         config = ''
@@ -111,6 +111,28 @@
                 return { from = from, to = to }
               end,
             },
+          })
+          require("mini.indentscope").setup({
+            symbol = "│",
+            draw = {
+              delay = 50,
+              animation = require("mini.indentscope").gen_animation.quadratic({
+                easing = "out",
+                duration = 15,
+                unit = "step",
+              }),
+            },
+          })
+        '';
+      }
+      {
+        # indent-blankline draws guides on every indent level (module name is `ibl`)
+        plugin = indent-blankline-nvim;
+        type = "lua";
+        config = ''
+          -- guides on all levels; scope disabled so mini.indentscope owns the current-scope line
+          require("ibl").setup({
+            scope = { enabled = false },
           })
         '';
       }

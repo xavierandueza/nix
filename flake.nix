@@ -42,20 +42,10 @@
         # Add the interactive bash shell to the shells
         environment.shells = [ pkgs.bashInteractive ];
 
-        # Homebrew only packages
-        homebrew = {
-          enable = true;
-          casks = [
-            "zen"
-          ];
-        };
-
-        # For MacOS default settings need to specify primary user
         system.primaryUser = "xavier";
 
         system.keyboard = {
           enableKeyMapping = true;
-          # swapLeftCtrlAndFn = true;
           userKeyMapping = [
             {
               HIDKeyboardModifierMappingSrc = 30064771129; # Caps Lock (0x700000039)
@@ -64,19 +54,22 @@
           ];
         };
 
-        # Allow non FOSS packages
         nixpkgs.config.allowUnfree = true;
 
-        # List packages installed in system profile. To search by name, run:
-        # $ nix-env -qaP | grep wget
         environment.systemPackages = [
-          # Terminal
           pkgs.ghostty-bin
-
-          # GUI
           pkgs.slack
           pkgs.mongodb-compass
+          pkgs.discord
         ];
+
+        homebrew = {
+          enable = true;
+          casks = [
+            "zen"
+            "steam"
+          ];
+        };
 
         services.aerospace = {
           enable = true;
@@ -121,6 +114,12 @@
               alt-8 = "workspace 8";
               alt-9 = "workspace 9";
               alt-0 = "workspace 0";
+
+              # Move focused window up/down/left/right
+              alt-shift-h = "move left";
+              alt-shift-j = "move down";
+              alt-shift-k = "move up";
+              alt-shift-l = "move right";
 
               # move focused window to workspace
               alt-shift-1 = "move-node-to-workspace 1 --focus-follows-window";
@@ -178,7 +177,14 @@
         # MacOS defaults
         system.defaults = {
           WindowManager.EnableStandardClickToShowDesktop = false;
-          dock.autohide = true;
+          dock = {
+            autohide = true;
+            persistent-apps = [
+              "/Applications/Nix Apps/Slack.app"
+              "/Applications/Nix Apps/Ghostty.app"
+              "/Applications/Zen.app"
+            ];
+          };
           NSGlobalDomain.AppleInterfaceStyle = "Dark";
           NSGlobalDomain.KeyRepeat = 2;
         };
