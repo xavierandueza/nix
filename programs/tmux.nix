@@ -1,4 +1,4 @@
-_: {
+{ pkgs, ... }: {
   programs.tmux = {
     enable = true;
     prefix = "C-n";
@@ -9,6 +9,10 @@ _: {
       set -g allow-passthrough on
       set -s extended-keys on
       set -as terminal-features 'xterm*:extkeys'
+
+      # Throttle status-bar refresh so the git/battery widgets don't spawn
+      # subprocesses every second.
+      set -g status-interval 5
 
       # prefix + S: lay out a standard set of named windows in the CURRENT session,
       # all rooted at the triggering pane's cwd. Renames the current window to nvim
@@ -40,5 +44,31 @@ _: {
       bind -T copy-mode-vi v send -X begin-selection
       bind -T copy-mode-vi y send -X copy-pipe-and-cancel "pbcopy" \; display-message "Copied to clipboard"
     '';
+    plugins = with pkgs.tmuxPlugins; [
+      {
+        plugin = tokyo-night-tmux;
+        # Options are read when the plugin's run-shell executes, so they must be
+        # set here (emitted right before it) rather than in the main extraConfig.
+        extraConfig = ''
+          set -g @tokyo-night-tmux_theme night
+          set -g @tokyo-night-tmux_transparent 0
+
+          set -g @tokyo-night-tmux_window_id_style digital
+          set -g @tokyo-night-tmux_pane_id_style hsquare
+
+          set -g @tokyo-night-tmux_show_path 1
+          set -g @tokyo-night-tmux_path_format relative
+
+          set -g @tokyo-night-tmux_show_git 1
+
+          set -g @tokyo-night-tmux_show_battery_widget 1
+
+          # Disabled to keep the bar uncluttered.
+          set -g @tokyo-night-tmux_show_netspeed 0
+          set -g @tokyo-night-tmux_show_music 0
+          set -g @tokyo-night-tmux_show_hostname 1
+        '';
+      }
+    ];
   };
 }
