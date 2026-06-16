@@ -1,7 +1,7 @@
 _: {
   programs.tmux = {
     enable = true;
-    prefix = "C-a";
+    prefix = "C-n";
     keyMode = "vi";
     mouse = true;
     terminal = "tmux-256color";
