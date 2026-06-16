@@ -185,6 +185,7 @@
               "/Applications/Nix Apps/Ghostty.app"
               "/Applications/Zen.app"
             ];
+            tilesize = 32;
           };
           NSGlobalDomain.AppleInterfaceStyle = "Dark";
           NSGlobalDomain.KeyRepeat = 2;
