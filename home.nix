@@ -1,4 +1,9 @@
-{ pkgs, inputs, ... }:
+{
+  config,
+  pkgs,
+  inputs,
+  ...
+}:
 {
   imports = [
     ./programs/tmux.nix
@@ -76,6 +81,7 @@
         name = "Xavier Andueza";
         email = "xavier@lyratechnologies.com.au";
       };
+      gpg.ssh.allowedSignersFile = "${config.home.homeDirectory}/.ssh/allowed_signers";
     };
     signing = {
       format = "ssh";
@@ -83,6 +89,11 @@
       signByDefault = true;
     };
   };
+
+  # Local trust list for verifying SSH-signed commits (git log --show-signature).
+  home.file.".ssh/allowed_signers".text = ''
+    xavier@lyratechnologies.com.au ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPbemigCfIIpc0dhm1lwZDtQdwFN64GN4x+U1yK9bS1E xavier@lyratechnologies.com.au
+  '';
 
   programs.bottom = {
     enable = true;
