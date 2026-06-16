@@ -10,6 +10,16 @@ _: {
       set -s extended-keys on
       set -as terminal-features 'xterm*:extkeys'
 
+      # prefix + S: lay out a standard set of named windows in the CURRENT session,
+      # all rooted at the triggering pane's cwd. Renames the current window to nvim
+      # (so you get indices 0-3) then adds the rest. Run it in a fresh session.
+      bind S \
+        rename-window nvim \;\
+        new-window -n agent  -c "#{pane_current_path}" \;\
+        new-window -n bash   -c "#{pane_current_path}" \;\
+        new-window -n server -c "#{pane_current_path}" \;\
+        select-window -t nvim
+
       # vi-style pane navigation: prefix + h/j/k/l
       bind h select-pane -L
       bind j select-pane -D
