@@ -20,6 +20,8 @@ _: {
         new-window -n server -c "#{pane_current_path}" \;\
         select-window -t nvim
 
+      bind r source-file ~/.config/tmux/tmux.conf \; display-message "Config reloaded"
+
       # vi-style pane navigation: prefix + h/j/k/l
       bind h select-pane -L
       bind j select-pane -D
