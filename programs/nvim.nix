@@ -59,7 +59,9 @@
           vim.o.timeout = true
           vim.o.timeoutlen = 500
           local wk = require("which-key")
-          wk.setup({})
+          wk.setup({
+            preset = "helix", -- bordered box anchored bottom-right
+          })
           -- label the leader prefixes so the popup groups them instead of listing raw keys
           wk.add({
             { "<leader>f", group = "file" },
@@ -114,6 +116,23 @@
         type = "lua";
         config = ''
           require("todo-comments").setup()
+        '';
+      }
+      {
+        plugin = grug-far-nvim;
+        type = "lua";
+        config = ''
+          require("grug-far").setup({})
+          vim.keymap.set({ "n", "x" }, "<leader>sr", function()
+            local grug = require("grug-far")
+            local ext = vim.bo.buftype == "" and vim.fn.expand("%:e")
+            grug.open({
+              transient = true,
+              prefills = {
+                filesFilter = ext and ext ~= "" and "*." .. ext or nil,
+              },
+            })
+          end, { desc = "Search and replace" })
         '';
       }
       {
@@ -299,6 +318,7 @@
     ];
     # Tools wrapped onto neovim's own PATH so conform/nvim-lint always find them.
     extraPackages = with pkgs; [
+      ripgrep
       nixfmt
       statix
       deadnix
