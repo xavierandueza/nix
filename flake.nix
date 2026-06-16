@@ -69,6 +69,7 @@
             "zen"
             "steam"
             "loom"
+            "karabiner-elements"
           ];
         };
 
@@ -185,7 +186,7 @@
               "/Applications/Nix Apps/Ghostty.app"
               "/Applications/Zen.app"
             ];
-            tilesize = 32;
+            tilesize = 48;
           };
           NSGlobalDomain.AppleInterfaceStyle = "Dark";
           NSGlobalDomain.KeyRepeat = 2;

@@ -8,6 +8,7 @@
   imports = [
     ./programs/tmux.nix
     ./programs/nvim.nix
+    ./programs/karabiner.nix
   ];
 
   home.username = "xavier";
