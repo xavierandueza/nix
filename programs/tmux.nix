@@ -12,7 +12,7 @@
 
       # Throttle status-bar refresh so the git/battery widgets don't spawn
       # subprocesses every second.
-      set -g status-interval 5
+      set -g status-interval 120
 
       # prefix + S: lay out a standard set of named windows in the CURRENT session,
       # all rooted at the triggering pane's cwd. Renames the current window to nvim
@@ -53,8 +53,8 @@
           set -g @tokyo-night-tmux_theme night
           set -g @tokyo-night-tmux_transparent 0
 
-          set -g @tokyo-night-tmux_window_id_style digital
-          set -g @tokyo-night-tmux_pane_id_style hsquare
+          set -g @tokyo-night-tmux_window_id_style fsquare
+          set -g @tokyo-night-tmux_pane_id_style hide
 
           set -g @tokyo-night-tmux_show_path 1
           set -g @tokyo-night-tmux_path_format relative
