@@ -30,6 +30,7 @@
     pnpm
     caddy
     infisical
+    pi-coding-agent
   ];
 
   # Global agent instructions
