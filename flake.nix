@@ -153,7 +153,7 @@
 
         # The redis module hardcodes `dir /var/lib/redis` in /etc/redis.conf but never
         # creates it; without this the launchd agent crashes on startup.
-        system.activationScripts.redisDataDir.text = ''
+        system.activationScripts.extraActivation.text = ''
           mkdir -p /var/lib/redis
           chown xavier:staff /var/lib/redis
         '';
