@@ -151,6 +151,13 @@
           port = 6379;
         };
 
+        # The redis module hardcodes `dir /var/lib/redis` in /etc/redis.conf but never
+        # creates it; without this the launchd agent crashes on startup.
+        system.activationScripts.redisDataDir.text = ''
+          mkdir -p /var/lib/redis
+          chown xavier:staff /var/lib/redis
+        '';
+
         # Resolve readme.local and all *.readme.local subdomains to localhost.
         services.dnsmasq = {
           enable = true;
