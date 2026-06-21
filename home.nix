@@ -41,17 +41,14 @@ in
   ];
 
   # Global agent instructions.
-  # NOTE: symlink individual paths, never the whole agent dir. ~/.pi/agent,
-  # ~/.codex and ~/.claude are live state dirs (auth.json, sessions, settings),
-  # so they must stay writable — only the config files come from the repo.
   home.file.".claude/CLAUDE.md".source = inputs.agents + "/AGENTS.md";
   home.file.".codex/AGENTS.md".source = inputs.agents + "/AGENTS.md";
   home.file.".config/opencode/AGENTS.md".source = inputs.agents + "/AGENTS.md";
   home.file.".pi/agent/AGENTS.md".source = inputs.agents + "/AGENTS.md";
 
-  # Skills: pi auto-discovers ~/.pi/agent/skills/ (dirs with SKILL.md).
-  # Enable once the /skills/ directory exists in the agents repo:
-  # home.file.".pi/agent/skills".source = inputs.agents + "/skills";
+  # Skills
+  home.file.".pi/agent/skills".source = inputs.agents + "/skills";
+  home.file.".claude/skills".source = inputs.agents + "/skills";
 
   programs.atuin = {
     enable = true;
@@ -70,6 +67,9 @@ in
 
   programs.bash = {
     enable = true;
+    initExtra = ''
+      mkcdir() { mkdir -p "$1" && cd "$1"; }
+    '';
   };
 
   programs.lazydocker = {
