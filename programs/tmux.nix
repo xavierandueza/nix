@@ -3,12 +3,17 @@
     enable = true;
     prefix = "C-n";
     keyMode = "vi";
+    baseIndex = 1;
     mouse = true;
     terminal = "tmux-256color";
     extraConfig = ''
       set -g allow-passthrough on
       set -s extended-keys on
-      set -as terminal-features 'xterm*:extkeys'
+      set -g extended-keys-format csi-u
+
+      # Pane base-1
+      setw -g pane-base-index 1
+      set -g renumber-windows on
 
       # Throttle status-bar refresh so the git/battery widgets don't spawn
       # subprocesses every second.
