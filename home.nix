@@ -4,18 +4,13 @@
   inputs,
   ...
 }:
-let
-  pkgs-pi = import inputs.nixpkgs-pi {
-    inherit (pkgs) system;
-    config.allowUnfree = true;
-  };
-in
 
 {
   imports = [
     ./programs/tmux.nix
     ./programs/nvim.nix
     ./programs/karabiner.nix
+    ./programs/pi.nix
   ];
 
   home.username = "xavier";
@@ -37,7 +32,6 @@ in
     pnpm
     caddy
     infisical
-    pkgs-pi.pi-coding-agent
   ];
 
   # Global agent instructions.

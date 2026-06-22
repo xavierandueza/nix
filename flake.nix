@@ -27,11 +27,6 @@
       url = "github:homebrew/homebrew-cask";
       flake = false;
     };
-    # Linear CLI tool
-    schpet-tap = {
-      url = "github:schpet/homebrew-tap";
-      flake = false;
-    };
   };
 
   outputs =
@@ -71,7 +66,6 @@
 
         homebrew = {
           enable = true;
-          brews = [ "linear" ];
           casks = [
             "zen"
             "steam"
@@ -244,7 +238,6 @@
               taps = {
                 "homebrew/homebrew-core" = inputs.homebrew-core;
                 "homebrew/homebrew-cask" = inputs.homebrew-cask;
-                "schpet/homebrew-tap" = inputs.schpet-tap;
               };
               mutableTaps = false;
             };
