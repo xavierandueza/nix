@@ -11,6 +11,7 @@
     ./programs/nvim.nix
     ./programs/karabiner.nix
     ./programs/pi.nix
+    ./programs/wtx.nix
   ];
 
   home.username = "xavier";
@@ -19,6 +20,8 @@
 
   # User packages (your CLI tools live here now, not systemPackages)
   home.packages = with pkgs; [
+    (import ./packages/anarlog.nix { inherit pkgs; })
+    (import ./packages/hypa.nix { inherit pkgs; })
     ripgrep
     yazi
     claude-code
@@ -32,6 +35,7 @@
     pnpm
     caddy
     infisical
+    worktrunk
   ];
 
   # Global agent instructions.

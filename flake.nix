@@ -71,6 +71,7 @@
             "steam"
             "loom"
             "karabiner-elements"
+            "signal" # Although on nixpkgs needs constant updates
           ];
         };
 
@@ -223,7 +224,9 @@
           {
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
+            home-manager.backupFileExtension = "bak";
             home-manager.extraSpecialArgs = { inherit inputs; };
+            home-manager.sharedModules = [ inputs.mac-app-util.homeManagerModules.default ];
             home-manager.users.xavier = import ./home.nix;
           }
 
