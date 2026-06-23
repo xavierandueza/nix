@@ -18,6 +18,12 @@
   home.homeDirectory = "/Users/xavier";
   home.stateVersion = "24.11"; # set once, don't bump casually
 
+  home.sessionVariables = {
+    # Disable pi's context-mode's MCP server idle self-shutdown
+    # Causes annoying ui issues
+    CONTEXT_MODE_BRIDGE_IDLE_MS = "0";
+  };
+
   # User packages (your CLI tools live here now, not systemPackages)
   home.packages = with pkgs; [
     (import ./packages/anarlog.nix { inherit pkgs; })

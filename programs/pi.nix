@@ -16,6 +16,7 @@ let
   piPackages = [
     "npm:@hypabolic/pi-hypa"
     "npm:pi-mcp-adapter"
+    "npm:context-mode"
   ];
 
   # Emits a complete `if ...; then ... fi` block that installs `pkg` via pi
