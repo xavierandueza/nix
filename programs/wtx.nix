@@ -67,6 +67,9 @@ in
     worktree-path = "~/${worktreeBase}/{{ repo }}/{{ branch | sanitize }}"
     skip-shell-integration-prompt = true
 
+    [pre-start]
+    copy-ignored = "wt step copy-ignored"
+
     [projects]
   '';
 
