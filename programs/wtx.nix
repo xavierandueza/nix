@@ -75,7 +75,7 @@ in
     copy-ignored = "wt step copy-ignored"
 
     [post-remove]
-    kill-tmux = "tmux list-sessions -F '#{session_name} #{session_path}' 2>/dev/null | awk '$2 == "{{ worktree_path }}" {print $1}' | xargs -I{} tmux kill-session -t {} 2>/dev/null || true"
+    kill-tmux = "tmux list-sessions -F '#{session_name} #{session_path}' 2>/dev/null | awk '$2 == \"{{ worktree_path }}\" {print $1}' | xargs -I{} tmux kill-session -t {} 2>/dev/null || true"
 
     [projects]
   '';
