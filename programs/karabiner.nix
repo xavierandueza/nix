@@ -2,7 +2,9 @@ _: {
   # Karabiner-Elements reads ~/.config/karabiner/karabiner.json. This file is
   # fully Nix-owned (read-only symlink), so edits made in the Karabiner GUI
   # will NOT persist — manage every rule here instead.
-  home.file.".config/karabiner/karabiner.json".text = builtins.toJSON {
+  home.file.".config/karabiner/karabiner.json" = {
+    force = true;
+    text = builtins.toJSON {
     global.show_in_menu_bar = false;
     profiles = [
       {
@@ -52,5 +54,6 @@ _: {
         ];
       }
     ];
+  };
   };
 }
