@@ -13,6 +13,7 @@ let
     usage() {
       echo "Usage: wtx switch <branch> [-s <session-name>]"
       echo "       wtx switch -c <new-branch> [-b <base-branch>] [-s <session-name>]"
+      echo "       wtx remove [<branch>...] [--force] [--force-delete] [--no-delete-branch]"
       exit 1
     }
 
@@ -56,6 +57,9 @@ let
           tmux new-session -s "$tmux_session" -c "$worktree_path"
         fi
         ;;
+      remove)
+        wt remove "$@"
+        ;;
       *)
         usage
         ;;
@@ -69,6 +73,9 @@ in
 
     [pre-start]
     copy-ignored = "wt step copy-ignored"
+
+    [post-remove]
+    kill-tmux = "tmux list-sessions -F '#{session_name} #{session_path}' 2>/dev/null | awk '$2 == "{{ worktree_path }}" {print $1}' | xargs -I{} tmux kill-session -t {} 2>/dev/null || true"
 
     [projects]
   '';
