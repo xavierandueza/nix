@@ -73,6 +73,7 @@
     enable = true;
     initExtra = ''
       mkcdir() { mkdir -p "$1" && cd "$1"; }
+      ssh-add -l &>/dev/null || ssh-add -t 86400 ~/.ssh/id_ed25519
     '';
   };
 
@@ -90,7 +91,6 @@
     enableDefaultConfig = false;
     settings."*" = {
       identityFile = "~/.ssh/id_ed25519";
-      UseKeychain = "yes";
       AddKeysToAgent = "yes";
     };
   };
