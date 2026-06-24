@@ -35,6 +35,8 @@ in
 {
   home.packages = [ pkgs-pi.pi-coding-agent ];
 
+  home.file.".pi/agent/extensions/compact-threshold.ts".source = ../extensions/pi-compact-threshold.ts;
+
   home.activation.installPiPackages = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
     $VERBOSE_ARG echo "Ensuring pi packages are declared in settings.json"
     # `pi install` spawns npm, which isn't on PATH during activation.
@@ -45,5 +47,10 @@ in
     fi
 
     ${lib.concatMapStrings (pkg: ensureInstalled pkg) piPackages}
+
+    # Patch compaction settings — deep merge preserves pi-managed keys
+    ${pkgs.jq}/bin/jq '. * {"compaction": {"keepRecentTokens": 10000}}' \
+      "''${HOME}/.pi/agent/settings.json" > /tmp/pi-settings-patch.json \
+      && mv /tmp/pi-settings-patch.json "''${HOME}/.pi/agent/settings.json"
   '';
 }
