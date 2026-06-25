@@ -13,6 +13,11 @@
       flake = false;
     };
 
+    loops = {
+      url = "github:xavierandueza/loops";
+      flake = false;
+    };
+
     # Home/User-based management
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";

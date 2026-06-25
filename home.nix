@@ -29,6 +29,7 @@
   home.packages = with pkgs; [
     (import ./packages/anarlog.nix { inherit pkgs; })
     (import ./packages/hypa.nix { inherit pkgs; })
+    (import ./packages/loops.nix { inherit pkgs inputs; })
     ripgrep
     yazi
     claude-code
@@ -51,9 +52,21 @@
   home.file.".config/opencode/AGENTS.md".source = inputs.agents + "/AGENTS.md";
   home.file.".pi/agent/AGENTS.md".source = inputs.agents + "/AGENTS.md";
 
-  # Skills
-  home.file.".pi/agent/skills".source = inputs.agents + "/skills";
-  home.file.".claude/skills".source = inputs.agents + "/skills";
+  # Merge skills from all sources into a single directory.
+  home.file.".pi/agent/skills".source = pkgs.symlinkJoin {
+    name = "merged-skills";
+    paths = [
+      (inputs.agents + "/skills")
+      (inputs.loops + "/skills")
+    ];
+  };
+  home.file.".claude/skills".source = pkgs.symlinkJoin {
+    name = "merged-skills-claude";
+    paths = [
+      (inputs.agents + "/skills")
+      (inputs.loops + "/skills")
+    ];
+  };
 
   programs.atuin = {
     enable = true;

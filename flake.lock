@@ -3,11 +3,11 @@
     "agents": {
       "flake": false,
       "locked": {
-        "lastModified": 1782370006,
-        "narHash": "sha256-Jy1h2Ttb2MKI8V1wQEwm0av1CdQmA6lFAtqegSlHmGY=",
+        "lastModified": 1782374488,
+        "narHash": "sha256-ejp2tnVqYUogA5gslZRiTSUTuUZzoLz9ArS5kSOws10=",
         "owner": "xavierandueza",
         "repo": "agents",
-        "rev": "9b37ccc101da52beb42951be2de9048bb738c070",
+        "rev": "7f693985914d7180448df807fa6fcc9b68b24b4f",
         "type": "github"
       },
       "original": {
@@ -158,6 +158,22 @@
       "original": {
         "owner": "homebrew",
         "repo": "homebrew-core",
+        "type": "github"
+      }
+    },
+    "loops": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1782375142,
+        "narHash": "sha256-XYjrjsHCZw6Y2qypEXK63QxNZDSYex5J9Jb2tKoXnKk=",
+        "owner": "xavierandueza",
+        "repo": "loops",
+        "rev": "32b0560c0bb72b5a0e421da88565968f3930dc1f",
+        "type": "github"
+      },
+      "original": {
+        "owner": "xavierandueza",
+        "repo": "loops",
         "type": "github"
       }
     },
@@ -340,6 +356,7 @@
         "home-manager": "home-manager",
         "homebrew-cask": "homebrew-cask",
         "homebrew-core": "homebrew-core",
+        "loops": "loops",
         "mac-app-util": "mac-app-util",
         "nix-darwin": "nix-darwin",
         "nix-homebrew": "nix-homebrew",
