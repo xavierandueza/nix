@@ -35,6 +35,7 @@
           local actions = require("telescope.actions")
           require("telescope").setup({
             defaults = {
+              path_display = { "filename_first" },
               mappings = {
                 i = {
                   ["<C-j>"] = actions.move_selection_next,
@@ -139,6 +140,19 @@
         plugin = mini-nvim;
         type = "lua";
         config = ''
+          require("mini.files").setup({
+            windows = {
+              preview = true,
+              width_preview = 50,
+            },
+          })
+
+          vim.keymap.set("n", "<leader>fe", function()
+            local buf_path = vim.api.nvim_buf_get_name(0)
+            local target = buf_path ~= "" and buf_path or vim.uv.cwd()
+            require("mini.files").open(target)
+          end, { desc = "File explorer" })
+
           require("mini.ai").setup({
             custom_textobjects = {
               -- `g` = the whole buffer, so yag/dag/cag/vig act on the entire file
