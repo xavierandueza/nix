@@ -12,6 +12,7 @@
     ./programs/karabiner.nix
     ./programs/pi.nix
     ./programs/wtx.nix
+    ./programs/pix.nix
   ];
 
   home.username = "xavier";
