@@ -30,8 +30,10 @@ let
 
     tmux new-window -d -n "$resolved" -c "$PWD"
     tmux send-keys -t "$resolved" "pi" Enter
-    sleep 0.5
-    tmux send-keys -t "$resolved" "$message" Enter
+    sleep 1
+    tmux send-keys -t "$resolved" "$message"
+    sleep 0.3
+    tmux send-keys -t "$resolved" Enter
   '';
 in
 {
