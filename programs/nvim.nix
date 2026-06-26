@@ -143,7 +143,7 @@
           require("mini.files").setup({
             windows = {
               preview = true,
-              width_preview = 50,
+              width_preview = 100,
             },
           })
 
@@ -293,6 +293,7 @@
           require("telescope").load_extension("frecency")
           -- frecency is now the default file finder, scoped to the current project
           vim.keymap.set("n", "<leader><leader>", function()
+            require("mini.files").close()
             require("telescope").extensions.frecency.frecency({ workspace = "CWD" })
           end, { desc = "Find files (frecency)" })
         '';
