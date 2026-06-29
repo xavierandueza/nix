@@ -61,6 +61,7 @@
           require("telescope").load_extension("fzf")
 
           local builtin = require("telescope.builtin")
+          vim.keymap.set("n", "<leader>bf", builtin.buffers, { desc = "Find buffer" })
           vim.keymap.set("n", "<leader>sg", builtin.live_grep, { desc = "Grep" })
           vim.keymap.set("n", "<leader>ss", builtin.lsp_document_symbols, { desc = "Document symbols" })
           vim.keymap.set("n", "<leader>sS", builtin.lsp_dynamic_workspace_symbols, { desc = "Workspace symbols" })
@@ -81,6 +82,7 @@
           })
           -- label the leader prefixes so the popup groups them instead of listing raw keys
           wk.add({
+            { "<leader>b", group = "buffer" },
             { "<leader>f", group = "file" },
             { "<leader>g", group = "git" },
             { "<leader>n", group = "notifications" },
