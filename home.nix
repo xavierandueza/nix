@@ -98,6 +98,11 @@
   programs.lazygit = {
     enable = true;
     enableBashIntegration = true;
+    settings = {
+      git = {
+        overrideGpg = true;
+      };
+    };
   };
 
   programs.ssh = {
