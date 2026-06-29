@@ -35,6 +35,15 @@
           local actions = require("telescope.actions")
           require("telescope").setup({
             defaults = {
+              vimgrep_arguments = {
+                "rg",
+                "--color=never",
+                "--no-heading",
+                "--with-filename",
+                "--line-number",
+                "--column",
+                "--smart-case",
+              },
               path_display = { "filename_first" },
               mappings = {
                 i = {
@@ -43,7 +52,13 @@
                 },
               },
             },
+            extensions = {
+              fzf = {
+                case_mode = "smart_case",
+              },
+            },
           })
+          require("telescope").load_extension("fzf")
 
           local builtin = require("telescope.builtin")
           vim.keymap.set("n", "<leader>sg", builtin.live_grep, { desc = "Grep" })
@@ -52,6 +67,7 @@
           vim.keymap.set("n", "<leader>gb", builtin.git_bcommits, { desc = "File commits (blame)" })
         '';
       }
+      telescope-fzf-native-nvim
       {
         plugin = which-key-nvim;
         type = "lua";
@@ -347,6 +363,8 @@
       vim.opt.number = true
       vim.opt.relativenumber = true
       vim.opt.termguicolors = true
+      vim.opt.ignorecase = true
+      vim.opt.smartcase = true
       -- route yanks/deletes/pastes through the system clipboard (pbcopy/pbpaste on macOS)
       vim.opt.clipboard = "unnamedplus"
       -- indent with spaces by default (matches what nixfmt/tsserver emit on save)
