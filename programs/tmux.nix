@@ -43,6 +43,9 @@
       bind k select-pane -U
       bind l select-pane -R
 
+      bind | split-window -h -c "#{pane_current_path}"
+      bind - split-window -v -c "#{pane_current_path}"
+
       # Copy-mode selection highlight
       set -g mode-style "bg=#283457,fg=#c0caf5"
       # Search match highlighting in copy mode
