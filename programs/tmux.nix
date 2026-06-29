@@ -19,6 +19,12 @@
       # subprocesses every second.
       set -g status-interval 120
 
+      # tmux-resurrect: prefix + Ctrl-s saves, prefix + Ctrl-r restores.
+      set -g @resurrect-dir '~/.local/share/tmux/resurrect'
+      set -g @resurrect-capture-pane-contents 'on'
+      set -g @resurrect-strategy-nvim 'session'
+      set -g @resurrect-strategy-vim 'session'
+
       # prefix + S: lay out a standard set of named windows in the CURRENT session,
       # all rooted at the triggering pane's cwd. Renames the current window to nvim
       # (so you get indices 0-3) then adds the rest. Run it in a fresh session.
@@ -50,6 +56,8 @@
       bind -T copy-mode-vi y send -X copy-pipe-and-cancel "pbcopy" \; display-message "Copied to clipboard"
     '';
     plugins = with pkgs.tmuxPlugins; [
+      resurrect
+
       {
         plugin = tokyo-night-tmux;
         # Options are read when the plugin's run-shell executes, so they must be
