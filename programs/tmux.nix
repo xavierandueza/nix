@@ -72,12 +72,12 @@
           set -g @tokyo-night-tmux_window_id_style fsquare
           set -g @tokyo-night-tmux_pane_id_style hide
 
-          set -g @tokyo-night-tmux_show_path 1
-          set -g @tokyo-night-tmux_path_format relative
+          set -g @tokyo-night-tmux_show_path 0
 
           set -g @tokyo-night-tmux_show_git 1
 
-          set -g @tokyo-night-tmux_show_battery_widget 1
+          set -g @tokyo-night-tmux_show_battery_widget 0
+          set -g @tokyo-night-tmux_show_datetime 0
 
           # Disabled to keep the bar uncluttered.
           set -g @tokyo-night-tmux_show_netspeed 0
