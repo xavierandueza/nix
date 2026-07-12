@@ -10,6 +10,16 @@ _: {
       {
         name = "Default";
         selected = true;
+        devices = [
+          {
+            identifiers = {
+              device_address = "ef-77-f5-a8-0f-4f";
+              is_keyboard = true;
+              is_pointing_device = true;
+            };
+            ignore = false;
+          }
+        ];
         complex_modifications.rules = [
           {
             description = "Swap fn and left_control (built-in keyboard only)";
@@ -48,6 +58,21 @@ _: {
                   modifiers.mandatory = [ "left_control" ];
                 };
                 to = [ { key_code = "escape"; } ];
+              }
+            ];
+          }
+          {
+            description = "Backspace -> option + space for Handy recording";
+            manipulators = [
+              {
+                type = "basic";
+                from.key_code = "delete_or_backspace";
+                to = [
+                  {
+                    key_code = "spacebar";
+                    modifiers = [ "left_option" ];
+                  }
+                ];
               }
             ];
           }
