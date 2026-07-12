@@ -44,6 +44,7 @@
     caddy
     infisical
     worktrunk
+    inputs.llm-agents.packages.${pkgs.system}.handy
   ];
 
   # Global agent instructions.

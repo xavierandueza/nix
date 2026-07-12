@@ -3,7 +3,7 @@
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
-    nixpkgs-pi.url = "github:NixOS/nixpkgs/5a722a7155bfc9fbe657f28d26b71860d95324bc";
+    llm-agents.url = "github:numtide/llm-agents.nix";
     nix-darwin.url = "github:nix-darwin/nix-darwin/master";
     nix-darwin.inputs.nixpkgs.follows = "nixpkgs";
     mac-app-util.url = "github:hraban/mac-app-util";
@@ -66,7 +66,6 @@
           pkgs.ghostty-bin
           pkgs.slack
           pkgs.mongodb-compass
-          pkgs.discord
         ];
 
         homebrew = {
@@ -77,6 +76,7 @@
             "loom"
             "karabiner-elements"
             "signal" # Although on nixpkgs needs constant updates
+            "discord"
           ];
         };
 

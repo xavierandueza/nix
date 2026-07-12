@@ -1,15 +1,11 @@
 {
-  config,
   pkgs,
   inputs,
   lib,
   ...
 }:
 let
-  pkgs-pi = import inputs.nixpkgs-pi {
-    inherit (pkgs) system;
-    config.allowUnfree = true;
-  };
+  pi = inputs.llm-agents.packages.${pkgs.system}.pi;
 
   # Source of truth for which pi packages should be installed.
   # Versioned specs (npm:foo@1.2.3) are pinned; pi skips them on `pi update`.
@@ -27,15 +23,13 @@ let
       '(.packages // []) | any(. == $p or (type == "object" and .source == $p))' \
       "''${HOME}/.pi/agent/settings.json" >/dev/null 2>&1; then
       $VERBOSE_ARG echo "Installing ${pkg}"
-      ${pkgs-pi.pi-coding-agent}/bin/pi install "${pkg}" || \
+      ${pi}/bin/pi install "${pkg}" || \
         $VERBOSE_ARG echo "WARN: \`pi install ${pkg}\` failed (network?) — retry on next switch or \`pi update --extensions\`"
     fi
   '';
 in
 {
-  home.packages = [ pkgs-pi.pi-coding-agent ];
-
-  home.file.".pi/agent/extensions/compact-threshold.ts".source = ../extensions/pi-compact-threshold.ts;
+  home.packages = [ pi ];
 
   home.activation.installPiPackages = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
     $VERBOSE_ARG echo "Ensuring pi packages are declared in settings.json"
@@ -48,9 +42,5 @@ in
 
     ${lib.concatMapStrings (pkg: ensureInstalled pkg) piPackages}
 
-    # Patch compaction settings — deep merge preserves pi-managed keys
-    ${pkgs.jq}/bin/jq '. * {"compaction": {"keepRecentTokens": 10000}}' \
-      "''${HOME}/.pi/agent/settings.json" > /tmp/pi-settings-patch.json \
-      && mv /tmp/pi-settings-patch.json "''${HOME}/.pi/agent/settings.json"
   '';
 }
