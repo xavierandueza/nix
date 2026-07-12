@@ -13,6 +13,7 @@
     ./programs/pi.nix
     ./programs/wtx.nix
     ./programs/pix.nix
+    ./programs/zen.nix
   ];
 
   home.username = "xavier";

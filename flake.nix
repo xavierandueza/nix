@@ -7,6 +7,11 @@
     nix-darwin.url = "github:nix-darwin/nix-darwin/master";
     nix-darwin.inputs.nixpkgs.follows = "nixpkgs";
     mac-app-util.url = "github:hraban/mac-app-util";
+    zen-browser = {
+      url = "github:0xc000022070/zen-browser-flake";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.home-manager.follows = "home-manager";
+    };
 
     agents = {
       url = "github:xavierandueza/agents";
@@ -71,7 +76,6 @@
         homebrew = {
           enable = true;
           casks = [
-            "zen"
             "steam"
             "loom"
             "karabiner-elements"
@@ -198,7 +202,7 @@
             persistent-apps = [
               "/Applications/Nix Apps/Slack.app"
               "/Applications/Nix Apps/Ghostty.app"
-              "/Applications/Zen.app"
+              "/Applications/Nix Apps/Zen Browser (Beta).app"
             ];
             tilesize = 48;
           };
