@@ -196,7 +196,11 @@
 
         # MacOS defaults
         system.defaults = {
-          WindowManager.EnableStandardClickToShowDesktop = false;
+          WindowManager = {
+            EnableStandardClickToShowDesktop = false;
+            StandardHideWidgets = true;
+            StageManagerHideWidgets = true;
+          };
           dock = {
             autohide = true;
             persistent-apps = [
