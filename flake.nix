@@ -230,14 +230,32 @@
           configuration
           inputs.mac-app-util.darwinModules.default
           inputs.home-manager.darwinModules.home-manager
-          {
-            home-manager.useGlobalPkgs = true;
-            home-manager.useUserPackages = true;
-            home-manager.backupFileExtension = "bak";
-            home-manager.extraSpecialArgs = { inherit inputs; };
-            home-manager.sharedModules = [ inputs.mac-app-util.homeManagerModules.default ];
-            home-manager.users.xavier = import ./home.nix;
-          }
+          ({ pkgs, ... }:
+            let
+              timestampedBackup = pkgs.writeShellScript "home-manager-timestamped-backup" ''
+                set -eu
+
+                target="$1"
+                timestamp="$(${pkgs.coreutils}/bin/date +%Y%m%d-%H%M%S)"
+                backup="$target.bak.$timestamp"
+                suffix=1
+
+                while [ -e "$backup" ]; do
+                  backup="$target.bak.$timestamp.$suffix"
+                  suffix=$((suffix + 1))
+                done
+
+                ${pkgs.coreutils}/bin/mv -- "$target" "$backup"
+              '';
+            in
+            {
+              home-manager.useGlobalPkgs = true;
+              home-manager.useUserPackages = true;
+              home-manager.backupCommand = timestampedBackup;
+              home-manager.extraSpecialArgs = { inherit inputs; };
+              home-manager.sharedModules = [ inputs.mac-app-util.homeManagerModules.default ];
+              home-manager.users.xavier = import ./home.nix;
+            })
 
           # Homebrew config
           inputs.nix-homebrew.darwinModules.nix-homebrew
