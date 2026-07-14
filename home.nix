@@ -2,9 +2,13 @@
   config,
   pkgs,
   inputs,
+  lib,
   ...
 }:
 
+let
+  agentsMcpConfig = inputs.agents + "/mcp.json";
+in
 {
   imports = [
     ./programs/tmux.nix
@@ -15,7 +19,10 @@
     ./programs/pix.nix
     ./programs/wallpaper.nix
     ./programs/zen.nix
-  ];
+  ]
+  ++ lib.optional (builtins.pathExists agentsMcpConfig) {
+    home.file.".config/mcp/mcp.json".source = agentsMcpConfig;
+  };
 
   home.username = "xavier";
   home.homeDirectory = "/Users/xavier";
