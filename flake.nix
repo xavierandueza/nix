@@ -23,6 +23,11 @@
       flake = false;
     };
 
+    langfuse-skills = {
+      url = "github:langfuse/skills";
+      flake = false;
+    };
+
     # Home/User-based management
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";

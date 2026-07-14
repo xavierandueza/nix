@@ -61,6 +61,7 @@
     paths = [
       (inputs.agents + "/skills")
       (inputs.loops + "/skills")
+      (inputs.langfuse-skills + "/skills")
     ];
   };
   home.file.".claude/skills".source = pkgs.symlinkJoin {
@@ -68,6 +69,7 @@
     paths = [
       (inputs.agents + "/skills")
       (inputs.loops + "/skills")
+      (inputs.langfuse-skills + "/skills")
     ];
   };
 

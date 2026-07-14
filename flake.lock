@@ -215,6 +215,22 @@
         "type": "github"
       }
     },
+    "langfuse-skills": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1783932215,
+        "narHash": "sha256-+wvZVjrMq/GkZHcAtghkHgfDa3+P+Rg76mkUHHWQYBw=",
+        "owner": "langfuse",
+        "repo": "skills",
+        "rev": "a20c726a70137cb4e3667de78613ba7e00685018",
+        "type": "github"
+      },
+      "original": {
+        "owner": "langfuse",
+        "repo": "skills",
+        "type": "github"
+      }
+    },
     "llm-agents": {
       "inputs": {
         "bun2nix": "bun2nix",
@@ -432,6 +448,7 @@
         "home-manager": "home-manager",
         "homebrew-cask": "homebrew-cask",
         "homebrew-core": "homebrew-core",
+        "langfuse-skills": "langfuse-skills",
         "llm-agents": "llm-agents",
         "loops": "loops",
         "mac-app-util": "mac-app-util",
