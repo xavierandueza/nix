@@ -44,9 +44,11 @@ let
 
         repo_name="$(basename "$(git rev-parse --show-toplevel)")"
         branch_slug="''${branch//\//-}"
+        branch_label="''${branch#*/}"
+        branch_label="''${branch_label//\//-}"
         worktree_path="$HOME/${worktreeBase}/$repo_name/$branch_slug"
 
-        tmux_session="''${session_label:-$branch_slug}-''${repo_name}"
+        tmux_session="''${repo_name}-''${session_label:-$branch_label}"
 
         wt switch "''${wt_args[@]}"
 
