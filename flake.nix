@@ -211,7 +211,7 @@
             persistent-apps = [
               "/Applications/Nix Apps/Slack.app"
               "/Applications/Nix Apps/Ghostty.app"
-              "/Applications/Nix Apps/Zen Browser (Beta).app"
+              "/Users/xavier/Applications/Home Manager Apps/Zen Browser (Beta).app"
             ];
             tilesize = 48;
           };

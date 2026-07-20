@@ -1,4 +1,9 @@
-{ inputs, ... }:
+{
+  inputs,
+  lib,
+  pkgs,
+  ...
+}:
 
 {
   imports = [ inputs.zen-browser.homeModules.beta ];
@@ -368,4 +373,20 @@
       };
     };
   };
+
+  home.activation.registerZenAsDefaultBrowser = lib.hm.dag.entryAfter [ "trampolineApps" ] ''
+    zenApp="$HOME/Applications/Home Manager Apps/Zen Browser (Beta).app"
+    zenTrampoline="$HOME/Applications/Home Manager Trampolines/Zen Browser (Beta).app"
+    lsregister="/System/Library/Frameworks/CoreServices.framework/Frameworks/LaunchServices.framework/Support/lsregister"
+
+    if [ -e "$zenTrampoline" ]; then
+      $DRY_RUN_CMD "$lsregister" -u "$zenTrampoline" || true
+      $DRY_RUN_CMD rm -rf "$zenTrampoline"
+    fi
+
+    $DRY_RUN_CMD "$lsregister" -f "$zenApp"
+    $DRY_RUN_CMD ${pkgs.duti}/bin/duti -s app.zen-browser.zen http all
+    $DRY_RUN_CMD ${pkgs.duti}/bin/duti -s app.zen-browser.zen https all
+    $DRY_RUN_CMD ${pkgs.duti}/bin/duti -s app.zen-browser.zen public.html all
+  '';
 }
