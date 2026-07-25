@@ -239,7 +239,8 @@
           configuration
           inputs.mac-app-util.darwinModules.default
           inputs.home-manager.darwinModules.home-manager
-          ({ pkgs, ... }:
+          (
+            { pkgs, ... }:
             let
               timestampedBackup = pkgs.writeShellScript "home-manager-timestamped-backup" ''
                 set -eu
@@ -264,7 +265,8 @@
               home-manager.extraSpecialArgs = { inherit inputs; };
               home-manager.sharedModules = [ inputs.mac-app-util.homeManagerModules.default ];
               home-manager.users.xavier = import ./home.nix;
-            })
+            }
+          )
 
           # Homebrew config
           inputs.nix-homebrew.darwinModules.nix-homebrew
