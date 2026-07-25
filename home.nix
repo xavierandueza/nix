@@ -19,6 +19,7 @@ in
     ./programs/pix.nix
     ./programs/wallpaper.nix
     ./programs/zen.nix
+    ./programs/herdr.nix
   ]
   ++ lib.optional (builtins.pathExists agentsMcpConfig) {
     home.file.".config/mcp/mcp.json".source = agentsMcpConfig;
