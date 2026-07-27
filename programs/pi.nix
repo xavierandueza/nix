@@ -35,7 +35,7 @@ in
     $VERBOSE_ARG echo "Ensuring pi packages are declared in settings.json"
     # `pi install` spawns npm, which isn't on PATH during activation.
     export PATH="${pkgs.nodejs_22}/bin:$PATH"
-    mkdir -p "''${HOME}/.pi/agent"
+    mkdir -p "''${HOME}/.pi/agent/extensions"
     if [ ! -f "''${HOME}/.pi/agent/settings.json" ]; then
       echo '{}' > "''${HOME}/.pi/agent/settings.json"
     fi
