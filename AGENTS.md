@@ -22,9 +22,10 @@ sudo nix run nix-darwin -- switch --flake ~/.config/nix
 ├── flake.lock
 ├── home.nix             # home-manager: user packages, dotfiles, program modules
 └── programs/            # broken-out per-program configs (imported by home.nix)
+    ├── herdr.nix
     ├── karabiner.nix
     ├── nvim.nix
-    └── tmux.nix
+    └── pix.nix
 ```
 
 ## Notes
