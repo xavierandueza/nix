@@ -1,6 +1,7 @@
 {
   pkgs,
   inputs,
+  lib,
   ...
 }:
 let
@@ -9,6 +10,14 @@ let
 in
 {
   home.packages = [ herdr ];
+
+  # Install the herdr pi integration
+  home.activation.installHerdrPiIntegration = lib.hm.dag.entryAfter [ "installPiPackages" ] ''
+    $VERBOSE_ARG echo "Installing Herdr Pi integration"
+    ${herdr}/bin/herdr integration install pi
+  '';
+
+  # Yaml config setup
   xdg.configFile."herdr/config.toml".source = tomlFormat.generate "herdr/config.toml" {
     theme = {
       name = "tokyo-night";
@@ -20,6 +29,8 @@ in
 
     keys = {
       prefix = "ctrl+n";
+      navigate_workspace_up = "k";
+      navigate_workspace_down = "j";
     };
 
     ui = {
@@ -35,6 +46,10 @@ in
       pane_gaps = true;
 
       mouse_capture = true;
+    };
+
+    worktrees = {
+      directory = "~/projects/worktrees/";
     };
   };
 }
