@@ -385,8 +385,17 @@
     fi
 
     $DRY_RUN_CMD "$lsregister" -f "$zenApp"
-    $DRY_RUN_CMD ${pkgs.duti}/bin/duti -s app.zen-browser.zen http all
-    $DRY_RUN_CMD ${pkgs.duti}/bin/duti -s app.zen-browser.zen https all
-    $DRY_RUN_CMD ${pkgs.duti}/bin/duti -s app.zen-browser.zen public.html all
+
+    if [ "$(${pkgs.duti}/bin/duti -d http 2>/dev/null)" != "app.zen-browser.zen" ]; then
+      $DRY_RUN_CMD ${pkgs.duti}/bin/duti -s app.zen-browser.zen http
+    fi
+
+    if [ "$(${pkgs.duti}/bin/duti -d https 2>/dev/null)" != "app.zen-browser.zen" ]; then
+      $DRY_RUN_CMD ${pkgs.duti}/bin/duti -s app.zen-browser.zen https
+    fi
+
+    if [ "$(${pkgs.duti}/bin/duti -d public.html 2>/dev/null)" != "app.zen-browser.zen" ]; then
+      $DRY_RUN_CMD ${pkgs.duti}/bin/duti -s app.zen-browser.zen public.html viewer
+    fi
   '';
 }
