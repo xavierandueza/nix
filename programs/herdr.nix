@@ -24,7 +24,7 @@ in
     };
 
     terminal = {
-      new_cwd = "~/projects/";
+      new_cwd = "follow";
     };
 
     keys = {
