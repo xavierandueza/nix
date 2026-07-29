@@ -256,11 +256,11 @@
     "loops": {
       "flake": false,
       "locked": {
-        "lastModified": 1784592138,
-        "narHash": "sha256-5a5l+ypYGIWh9HxFYBjzZvYbu54qyCf+lXT53bU2TwE=",
+        "lastModified": 1785296785,
+        "narHash": "sha256-JAs0caYi8rD55v2NVl+68xBck0eJZ/4uL14MXaFsmVs=",
         "owner": "xavierandueza",
         "repo": "loops",
-        "rev": "047032b41c9d16a7bb56d6ddd81638374ebbeabb",
+        "rev": "931a44ff059f17a3953e97ef5bcb485bff9a23d6",
         "type": "github"
       },
       "original": {
