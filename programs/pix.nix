@@ -129,6 +129,34 @@ let
       }
       trap cleanup EXIT
 
+      shell_ready=false
+      ready_checks=0
+      for _ in {1..300}; do
+        if process_info="$(herdr pane process-info --pane "$pane_id" 2>/dev/null)" \
+          && jq -e '
+            .result.process_info as $process
+            | ($process.foreground_processes // []) as $foreground
+            | ($process.shell_pid != null)
+              and ($process.foreground_process_group_id == $process.shell_pid)
+              and (($foreground | length) == 1)
+              and ($foreground[0].pid == $process.shell_pid)
+          ' <<<"$process_info" >/dev/null; then
+          ready_checks=$((ready_checks + 1))
+          if (( ready_checks >= 4 )); then
+            shell_ready=true
+            break
+          fi
+        else
+          ready_checks=0
+        fi
+        sleep 0.1
+      done
+
+      if [[ "$shell_ready" != true ]]; then
+        echo "Error: pane $pane_id did not reach a stable shell prompt within 30 seconds" >&2
+        exit 1
+      fi
+
       if [[ -n "$session_id" ]]; then
         herdr agent start "$agent_name" --kind pi --pane "$pane_id" -- --session-id "$session_id" >/dev/null
       else
