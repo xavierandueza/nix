@@ -12,6 +12,7 @@ in
 {
   imports = [
     ./programs/nvim.nix
+    ./programs/obsidian.nix
     ./programs/karabiner.nix
     ./programs/pi.nix
     ./programs/pix.nix
@@ -141,6 +142,8 @@ in
       signByDefault = true;
     };
   };
+
+  programs.home-manager.enable = true;
 
   # Local trust list for verifying SSH-signed commits (git log --show-signature).
   home.file.".ssh/allowed_signers".text = ''
