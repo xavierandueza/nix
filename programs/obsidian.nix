@@ -46,6 +46,7 @@ in
 
   programs.obsidian = {
     enable = true;
+    package = null;
     cli.enable = true;
     vaults = lib.mapAttrs (_: vault: { inherit (vault) target; }) vaults;
   };

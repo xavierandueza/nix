@@ -74,6 +74,7 @@
 
         environment.systemPackages = [
           pkgs.ghostty-bin
+          pkgs.obsidian
           pkgs.slack
           pkgs.mongodb-compass
         ];
