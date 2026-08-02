@@ -108,6 +108,7 @@
             "workspace-to-monitor-force-assignment" = {
               "1" = "secondary";
               "2" = "secondary";
+              "0" = "secondary";
             };
 
             mode.main.binding = {
