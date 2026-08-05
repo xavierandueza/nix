@@ -12,7 +12,7 @@ in
 {
   imports = [
     ./programs/nvim.nix
-    ./programs/obsidian.nix
+    ./programs/obsidian
     ./programs/karabiner.nix
     ./programs/pi.nix
     ./programs/pix.nix

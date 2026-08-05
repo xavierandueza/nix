@@ -1,10 +1,13 @@
 {
   config,
   lib,
+  pkgs,
   ...
 }:
 
 let
+  plugins = import ./plugins { inherit pkgs; };
+
   vaults = {
     personal = {
       target = "obsidian/personal";
@@ -49,5 +52,20 @@ in
     package = null;
     cli.enable = true;
     vaults = lib.mapAttrs (_: vault: { inherit (vault) target; }) vaults;
+    defaultSettings = {
+      app.vimMode = true;
+      communityPlugins = [
+        plugins.advanced-line-numbers
+        {
+          pkg = plugins.obsidian-git;
+          settings = {
+            autoPullInterval = 5;
+            autoPullOnBoot = true;
+            autoSaveInterval = 10;
+            pullBeforePush = true;
+          };
+        }
+      ];
+    };
   };
 }
