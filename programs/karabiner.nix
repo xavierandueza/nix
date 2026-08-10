@@ -19,6 +19,14 @@ _: {
             };
             ignore = false;
           }
+          {
+            identifiers = {
+              vendor_id = 12815;
+              product_id = 20565;
+              is_keyboard = true;
+            };
+            ignore = false;
+          }
         ];
         complex_modifications.rules = [
           {
