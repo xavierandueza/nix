@@ -28,6 +28,7 @@ _: {
             ignore = false;
           }
         ];
+        virtual_hid_keyboard.keyboard_type_v2 = "ansi";
         complex_modifications.rules = [
           {
             description = "Swap fn and left_control (built-in keyboard only)";
