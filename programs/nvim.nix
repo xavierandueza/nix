@@ -93,6 +93,29 @@
       }
       plenary-nvim # dependency of telescope and others
       nvim-web-devicons # File icons
+      {
+        plugin = bufferline-nvim;
+        type = "lua";
+        config = ''
+          require("bufferline").setup({
+            options = {
+              diagnostics = "nvim_lsp",
+              close_command = function(bufnr)
+                require("mini.bufremove").delete(bufnr, false)
+              end,
+              right_mouse_command = function(bufnr)
+                require("mini.bufremove").delete(bufnr, false)
+              end,
+            },
+          })
+
+          vim.keymap.set("n", "<S-h>", "<cmd>BufferLineCyclePrev<cr>", { desc = "Previous buffer" })
+          vim.keymap.set("n", "<S-l>", "<cmd>BufferLineCycleNext<cr>", { desc = "Next buffer" })
+          vim.keymap.set("n", "<leader>bd", function()
+            require("mini.bufremove").delete(0, false)
+          end, { desc = "Delete buffer" })
+        '';
+      }
       nui-nvim # UI component library; required dependency of noice
       nvim-notify # popup notification backend that noice routes notifications through
       {
