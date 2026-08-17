@@ -18,6 +18,11 @@
       flake = false;
     };
 
+    herdr-config = {
+      url = "github:xavierandueza/herdr";
+      flake = false;
+    };
+
     loops = {
       url = "github:xavierandueza/loops";
       flake = false;
