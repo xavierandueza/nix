@@ -8,6 +8,12 @@
 
 let
   agentsMcpConfig = inputs.agents + "/mcp.json";
+  mcpConfig = lib.recursiveUpdate (builtins.fromJSON (builtins.readFile agentsMcpConfig)) {
+    mcpServers.gitbook = {
+      url = "https://mcp.gitbook.com/mcp";
+      auth = "oauth";
+    };
+  };
 in
 {
   imports = [
@@ -21,7 +27,7 @@ in
     ./programs/herdr.nix
   ]
   ++ lib.optional (builtins.pathExists agentsMcpConfig) {
-    home.file.".config/mcp/mcp.json".source = agentsMcpConfig;
+    home.file.".config/mcp/mcp.json".text = builtins.toJSON mcpConfig;
   };
 
   home.username = "xavier";
@@ -46,7 +52,6 @@ in
     colima
     docker # the CLI only — the daemon lives inside colima's VM
     docker-compose # Normal docker doesn't include the code from here
-    nodejs_22
     redis # redis-server + redis-cli
     mongodb-tools
     ngrok
@@ -79,6 +84,12 @@ in
       (inputs.loops + "/skills")
       (inputs.langfuse-skills + "/skills")
     ];
+  };
+
+  programs.mise = {
+    enable = true;
+    enableBashIntegration = true;
+    globalConfig.tools.node = "22.21.0";
   };
 
   programs.atuin = {
