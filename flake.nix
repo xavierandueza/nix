@@ -93,6 +93,7 @@
             "signal" # Although on nixpkgs needs constant updates
             "discord"
             "betterdisplay"
+            "keepingyouawake"
           ];
         };
 
