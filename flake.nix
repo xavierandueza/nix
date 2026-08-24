@@ -94,7 +94,6 @@
             "discord"
             "betterdisplay"
             "keepingyouawake"
-            "chromium"
           ];
         };
 
