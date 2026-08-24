@@ -47,7 +47,6 @@ in
     (import ./packages/loops.nix { inherit pkgs inputs; })
     ripgrep
     yazi
-    claude-code
     gh
     colima
     docker # the CLI only — the daemon lives inside colima's VM

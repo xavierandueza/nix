@@ -272,11 +272,11 @@
     "loops": {
       "flake": false,
       "locked": {
-        "lastModified": 1785967893,
-        "narHash": "sha256-7g64mszZwjWQDnaSSlGWJgYPUn9FDOvd/8g+JQVRhSA=",
+        "lastModified": 1787287807,
+        "narHash": "sha256-pTZEFyLzGtEFFFm+kjT6/CyQqZC3MUGLxvO9ps1dcvs=",
         "owner": "xavierandueza",
         "repo": "loops",
-        "rev": "a746f3ceb4a0a1bb9dc7deff6f981c217fbf556d",
+        "rev": "c27ce598c4c17065236b6346acd7ae84c84d4d4b",
         "type": "github"
       },
       "original": {
