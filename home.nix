@@ -8,12 +8,8 @@
 
 let
   agentsMcpConfig = inputs.agents + "/mcp.json";
-  mcpConfig = lib.recursiveUpdate (builtins.fromJSON (builtins.readFile agentsMcpConfig)) {
-    mcpServers.gitbook = {
-      url = "https://mcp.gitbook.com/mcp";
-      auth = "oauth";
-    };
-  };
+  mcpConfig = builtins.fromJSON (builtins.readFile agentsMcpConfig);
+  playwrightCli = import ./packages/playwright-cli.nix { inherit pkgs; };
 in
 {
   imports = [
@@ -55,6 +51,7 @@ in
     mongodb-tools
     ngrok
     pnpm
+    playwrightCli
     caddy
     infisical
     worktrunk
@@ -74,6 +71,7 @@ in
       (inputs.agents + "/skills")
       (inputs.loops + "/skills")
       (inputs.langfuse-skills + "/skills")
+      "${playwrightCli}/share/playwright-cli/skills"
     ];
   };
   home.file.".claude/skills".source = pkgs.symlinkJoin {
@@ -82,6 +80,7 @@ in
       (inputs.agents + "/skills")
       (inputs.loops + "/skills")
       (inputs.langfuse-skills + "/skills")
+      "${playwrightCli}/share/playwright-cli/skills"
     ];
   };
 
