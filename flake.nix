@@ -127,8 +127,6 @@
               # Standards
               alt-enter = "exec-and-forget open -na Ghostty";
               alt-h = "focus --boundaries all-monitors-outer-frame --boundaries-action wrap-around-all-monitors left";
-              alt-j = "focus --boundaries all-monitors-outer-frame --boundaries-action wrap-around-all-monitors down";
-              alt-k = "focus --boundaries all-monitors-outer-frame --boundaries-action wrap-around-all-monitors up";
               alt-l = "focus --boundaries all-monitors-outer-frame --boundaries-action wrap-around-all-monitors right";
 
               # Resize workspaces
@@ -149,8 +147,6 @@
 
               # Move focused window up/down/left/right
               alt-shift-h = "move left";
-              alt-shift-j = "move down";
-              alt-shift-k = "move up";
               alt-shift-l = "move right";
 
               # move focused window to workspace
