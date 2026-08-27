@@ -472,6 +472,7 @@
         "nix-darwin": "nix-darwin",
         "nix-homebrew": "nix-homebrew",
         "nixpkgs": "nixpkgs_6",
+        "y3owk1n-tap": "y3owk1n-tap",
         "zen-browser": "zen-browser"
       }
     },
@@ -574,6 +575,22 @@
       "original": {
         "owner": "numtide",
         "repo": "treefmt-nix",
+        "type": "github"
+      }
+    },
+    "y3owk1n-tap": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1786856683,
+        "narHash": "sha256-CH5EWuz+A7CbeP5O/yD32AvMM6kgbMnZPlQv7gK/iZU=",
+        "owner": "y3owk1n",
+        "repo": "homebrew-tap",
+        "rev": "939237a73313becdf910cb61e9741faf0f9f92e6",
+        "type": "github"
+      },
+      "original": {
+        "owner": "y3owk1n",
+        "repo": "homebrew-tap",
         "type": "github"
       }
     },

@@ -13,6 +13,7 @@ let
 in
 {
   imports = [
+    ./programs/neru.nix
     ./programs/nvim.nix
     ./programs/obsidian
     ./programs/karabiner.nix
