@@ -171,5 +171,6 @@ in
   home.file.".config/ghostty/config".text = ''
     font-family = JetBrainsMono Nerd Font
     theme = TokyoNight
+    macos-option-as-alt = left
   '';
 }
