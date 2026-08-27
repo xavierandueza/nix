@@ -166,11 +166,11 @@
     "herdr-config": {
       "flake": false,
       "locked": {
-        "lastModified": 1786939712,
-        "narHash": "sha256-YcBqGf2+WSgURjShMR8JZetm71qOhShP7TzL/9O37E0=",
+        "lastModified": 1787868588,
+        "narHash": "sha256-g0yGOwL6q9rOr+/HgGwvA+NIoZtxgirIKTfbOt0dpnw=",
         "owner": "xavierandueza",
         "repo": "herdr",
-        "rev": "9ec0fc82a9fb11ef17ecc60646f81bcc96c695cf",
+        "rev": "cd4400ea59bb75393b2b2fab3f5287657b4aa91b",
         "type": "github"
       },
       "original": {
