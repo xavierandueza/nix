@@ -71,6 +71,7 @@ in
     paths = [
       (inputs.agents + "/skills")
       (inputs.loops + "/skills")
+      (inputs.herdr-skills + "/skills")
       (inputs.langfuse-skills + "/skills")
       "${playwrightCli}/share/playwright-cli/skills"
     ];
@@ -80,6 +81,7 @@ in
     paths = [
       (inputs.agents + "/skills")
       (inputs.loops + "/skills")
+      (inputs.herdr-skills + "/skills")
       (inputs.langfuse-skills + "/skills")
       "${playwrightCli}/share/playwright-cli/skills"
     ];
