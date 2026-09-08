@@ -19,6 +19,7 @@ in
     ./programs/karabiner.nix
     ./programs/pi.nix
     ./programs/pix.nix
+    ./programs/skills.nix
     ./programs/wallpaper.nix
     ./programs/zen.nix
     ./programs/herdr.nix
@@ -64,28 +65,6 @@ in
   home.file.".codex/AGENTS.md".source = inputs.agents + "/AGENTS.md";
   home.file.".config/opencode/AGENTS.md".source = inputs.agents + "/AGENTS.md";
   home.file.".pi/agent/AGENTS.md".source = inputs.agents + "/AGENTS.md";
-
-  # Merge skills from all sources into a single directory.
-  home.file.".pi/agent/skills".source = pkgs.symlinkJoin {
-    name = "merged-skills";
-    paths = [
-      (inputs.agents + "/skills")
-      (inputs.loops + "/skills")
-      (inputs.herdr-skills + "/skills")
-      (inputs.langfuse-skills + "/skills")
-      "${playwrightCli}/share/playwright-cli/skills"
-    ];
-  };
-  home.file.".claude/skills".source = pkgs.symlinkJoin {
-    name = "merged-skills-claude";
-    paths = [
-      (inputs.agents + "/skills")
-      (inputs.loops + "/skills")
-      (inputs.herdr-skills + "/skills")
-      (inputs.langfuse-skills + "/skills")
-      "${playwrightCli}/share/playwright-cli/skills"
-    ];
-  };
 
   programs.mise = {
     enable = true;

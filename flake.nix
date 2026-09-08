@@ -23,18 +23,8 @@
       flake = false;
     };
 
-    herdr-skills = {
-      url = "github:herdrdev/herdr";
-      flake = false;
-    };
-
     loops = {
       url = "github:xavierandueza/loops";
-      flake = false;
-    };
-
-    langfuse-skills = {
-      url = "github:langfuse/skills";
       flake = false;
     };
 
