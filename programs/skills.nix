@@ -25,5 +25,26 @@
     install_skills herdrdev/herdr '*'
     install_skills langfuse/skills '*'
     install_skills microsoft/playwright-cli playwright-cli
+    install_skills mattpocock/skills \
+      codebase-design \
+      diagnosing-bugs \
+      domain-modeling \
+      grill-with-docs \
+      implement \
+      improve-codebase-architecture \
+      prototype \
+      research \
+      resolving-merge-conflicts \
+      setup-matt-pocock-skills \
+      tdd \
+      to-spec \
+      to-tickets \
+      wayfinder \
+      grill-me \
+      grilling \
+      handoff \
+      teach \
+      wait-what \
+      writing-for-agents
   '';
 }
