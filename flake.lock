@@ -3,16 +3,32 @@
     "agents": {
       "flake": false,
       "locked": {
-        "lastModified": 1788421900,
-        "narHash": "sha256-LO6iwqqO6vm5clxT/BzVcdcmw7C1KpHKhfHv5KIZij0=",
+        "lastModified": 1788840510,
+        "narHash": "sha256-nwZhIeZ+jVuhya83hPKCtaFNjxZgbkFpmzUkF1n8LsQ=",
         "owner": "xavierandueza",
         "repo": "agents",
-        "rev": "c28db3932cf9234819b91d9e2d849c36ee6d43b3",
+        "rev": "999ed63689e2cb5da48d8ebacf349d02130a0592",
         "type": "github"
       },
       "original": {
         "owner": "xavierandueza",
         "repo": "agents",
+        "type": "github"
+      }
+    },
+    "anthropics-tap": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1789063881,
+        "narHash": "sha256-D8IxZXnPWTP7hjccGWJSGFZ99NQCnAJLOuau4vI2mKg=",
+        "owner": "anthropics",
+        "repo": "homebrew-tap",
+        "rev": "f2718938bc44db5713bfacf0e688861f1437ac5f",
+        "type": "github"
+      },
+      "original": {
+        "owner": "anthropics",
+        "repo": "homebrew-tap",
         "type": "github"
       }
     },
@@ -446,6 +462,7 @@
     "root": {
       "inputs": {
         "agents": "agents",
+        "anthropics-tap": "anthropics-tap",
         "herdr-config": "herdr-config",
         "home-manager": "home-manager",
         "homebrew-cask": "homebrew-cask",
