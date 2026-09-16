@@ -89,11 +89,9 @@
 
         homebrew = {
           enable = true;
-          brews = [
-            "anthropics/tap/ant"
-          ];
           casks = [
             "steam"
+            "anthropics/tap/ant"
             "loom"
             "karabiner-elements"
             "signal" # Although on nixpkgs needs constant updates
