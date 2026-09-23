@@ -7,7 +7,13 @@
 {
   home.activation.agentSkills = lib.hm.dag.entryAfter [ "linkGeneration" ] ''
     export DISABLE_TELEMETRY=1
-    export PATH="${lib.makeBinPath [ pkgs.nodejs_22 pkgs.git pkgs.gh ]}:$PATH"
+    export PATH="${
+      lib.makeBinPath [
+        pkgs.nodejs_22
+        pkgs.git
+        pkgs.gh
+      ]
+    }:$PATH"
 
     install_skills() {
       source="$1"
@@ -41,7 +47,6 @@
       to-spec \
       to-tickets \
       wayfinder \
-      grill-me \
       grilling \
       handoff \
       teach \
