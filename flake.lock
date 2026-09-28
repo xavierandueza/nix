@@ -3,11 +3,11 @@
     "agents": {
       "flake": false,
       "locked": {
-        "lastModified": 1788840510,
-        "narHash": "sha256-nwZhIeZ+jVuhya83hPKCtaFNjxZgbkFpmzUkF1n8LsQ=",
+        "lastModified": 1790631752,
+        "narHash": "sha256-gjQXHYoFfSN1AZgph3mBLxsgcenqsgOYjErMxmwjcC4=",
         "owner": "xavierandueza",
         "repo": "agents",
-        "rev": "999ed63689e2cb5da48d8ebacf349d02130a0592",
+        "rev": "235fb16e25b4fb61116a65d2e62f103a0599eb43",
         "type": "github"
       },
       "original": {
@@ -273,11 +273,11 @@
     "loops": {
       "flake": false,
       "locked": {
-        "lastModified": 1789532160,
-        "narHash": "sha256-RZ/2w9+b7FJqrrmYeb/xUOQtmI8+/o/ycnQDTsSt4Y4=",
+        "lastModified": 1790630559,
+        "narHash": "sha256-2qQkjPxOQ97bk++TQVkvPQ6K5Bn1MF4VKwzWJAKqkto=",
         "owner": "xavierandueza",
         "repo": "loops",
-        "rev": "1236279017a3537fe67bbfbfcaa35c5dbf9015b3",
+        "rev": "affd5bcf8ce941f07afdd17269309c19ac9686bd",
         "type": "github"
       },
       "original": {
