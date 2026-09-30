@@ -11,7 +11,6 @@ let
   # Versioned specs (npm:foo@1.2.3) are pinned; pi skips them on `pi update`.
   piPackages = [
     "npm:@hypabolic/pi-hypa"
-    "npm:pi-mcp-adapter"
     "npm:context-mode"
   ];
 
