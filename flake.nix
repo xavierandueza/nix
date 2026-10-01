@@ -3,8 +3,8 @@
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
-    llm-agents.url = "github:numtide/llm-agents.nix";
-    # llm-agents.url = "github:xavierandueza/llm-agents.nix/pi-0.99.1";
+    # llm-agents.url = "github:numtide/llm-agents.nix";
+    llm-agents.url = "github:xavierandueza/llm-agents.nix/pi-0.99.1";
     nix-darwin.url = "github:nix-darwin/nix-darwin/master";
     nix-darwin.inputs.nixpkgs.follows = "nixpkgs";
     mac-app-util.url = "github:hraban/mac-app-util";
