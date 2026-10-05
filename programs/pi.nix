@@ -5,13 +5,14 @@
   ...
 }:
 let
-  pi = inputs.llm-agents.packages.${pkgs.system}.pi;
+  pi = inputs.pi.packages.${pkgs.system}.default;
 
   # Source of truth for which pi packages should be installed.
   # Versioned specs (npm:foo@1.2.3) are pinned; pi skips them on `pi update`.
   piPackages = [
     "npm:@hypabolic/pi-hypa"
     "npm:context-mode"
+    "npm:@narumitw/pi-stamp"
   ];
 
   # Emits a complete `if ...; then ... fi` block that installs `pkg` via pi
@@ -29,6 +30,12 @@ let
 in
 {
   home.packages = [ pi ];
+
+  home.file.".pi/agent/pi-stamp.json".text = builtins.toJSON {
+    hourCycle = "24h";
+    timeZone = "Australia/Melbourne";
+    toolStamps = true;
+  };
 
   home.activation.installPiPackages = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
     $VERBOSE_ARG echo "Ensuring pi packages are declared in settings.json"

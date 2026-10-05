@@ -92,7 +92,7 @@ in
     initExtra = ''
       export PATH="$HOME/.local/bin:$PATH"
       mkcdir() { mkdir -p "$1" && cd "$1"; }
-      ssh-add -l &>/dev/null || ssh-add -t 86400 ~/.ssh/id_ed25519
+      ssh-add -l &>/dev/null || ssh-add -t 604800 ~/.ssh/id_ed25519
     '';
   };
 
