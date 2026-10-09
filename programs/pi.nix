@@ -10,7 +10,6 @@ let
   # Source of truth for which pi packages should be installed.
   # Versioned specs (npm:foo@1.2.3) are pinned; pi skips them on `pi update`.
   piPackages = [
-    "npm:@hypabolic/pi-hypa"
     "npm:context-mode"
     "npm:@narumitw/pi-stamp"
     "npm:@gotgenes/pi-subagents@23.2.0"
@@ -31,11 +30,6 @@ let
     "list_mcp_resources"
     "list_mcp_resource_templates"
     "read_mcp_resource"
-    "hypa_shell"
-    "hypa_read"
-    "hypa_grep"
-    "hypa_find"
-    "hypa_ls"
     "ctx_execute"
     "ctx_execute_file"
     "ctx_index"

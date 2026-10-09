@@ -41,7 +41,6 @@ in
   # User packages (your CLI tools live here now, not systemPackages)
   home.packages = with pkgs; [
     (import ./packages/anarlog.nix { inherit pkgs; })
-    (import ./packages/hypa.nix { inherit pkgs; })
     (import ./packages/loops.nix { inherit pkgs inputs; })
     ripgrep
     yazi
