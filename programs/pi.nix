@@ -13,7 +13,48 @@ let
     "npm:@hypabolic/pi-hypa"
     "npm:context-mode"
     "npm:@narumitw/pi-stamp"
+    "npm:@gotgenes/pi-subagents@23.2.0"
   ];
+
+  # Extension tools require explicit names; only MCP entries support wildcards.
+  subagentTools = [
+    "read"
+    "bash"
+    "edit"
+    "write"
+    "grep"
+    "find"
+    "ls"
+    "codemode"
+    "tool_search"
+    "mcp__*"
+    "list_mcp_resources"
+    "list_mcp_resource_templates"
+    "read_mcp_resource"
+    "hypa_shell"
+    "hypa_read"
+    "hypa_grep"
+    "hypa_find"
+    "hypa_ls"
+    "ctx_execute"
+    "ctx_execute_file"
+    "ctx_index"
+    "ctx_search"
+    "ctx_fetch_and_index"
+    "ctx_batch_execute"
+    "ctx_stats"
+    "ctx_doctor"
+    "ctx_upgrade"
+    "ctx_purge"
+    "ctx_insight"
+  ];
+
+  childAgentInstructions = ''
+    You are a child agent working on a task delegated by a parent agent.
+    You cannot spawn or manage other subagents. Complete the task yourself;
+    if additional delegation is needed, use ask_parent to request it.
+    Use notify_parent for progress updates.
+  '';
 
   # Emits a complete `if ...; then ... fi` block that installs `pkg` via pi
   # only if it isn't already recorded in settings.json's packages array
@@ -36,6 +77,49 @@ in
     timeZone = "Australia/Melbourne";
     toolStamps = true;
   };
+
+  home.file.".pi/agent/subagents.json".text = builtins.toJSON {
+    maxConcurrent = 25;
+    defaultMaxTurns = 0;
+    consumedSessionRetentionMinutes = 20160;
+    unconsumedSessionRetentionMinutes = 20160;
+    abortAllOnInterrupt = true;
+    midRunUpdates = true;
+  };
+
+  home.file.".pi/agent/agents/general-purpose.md".text = ''
+    ---
+    description: General-purpose agent for complex, multi-step tasks
+    display_name: Agent
+    tools: ${builtins.toJSON subagentTools}
+    prompt_mode: append
+    inherit_context: false
+    ---
+    ${childAgentInstructions}
+  '';
+
+  home.file.".pi/agent/agents/Explore.md".text = ''
+    ---
+    description: Codebase exploration and understanding
+    display_name: Explore
+    tools: ${builtins.toJSON subagentTools}
+    model: openai-codex/gpt-6-luna
+    thinking: max
+    prompt_mode: append
+    inherit_context: false
+    ---
+    ${childAgentInstructions}
+
+    You are a codebase exploration specialist. Search and analyse existing code,
+    leaving project files unchanged. Follow inherited tool guidance, adapt your
+    thoroughness to the task, and report findings with absolute file paths.
+  '';
+
+  home.file.".pi/agent/agents/Plan.md".text = ''
+    ---
+    enabled: false
+    ---
+  '';
 
   home.activation.installPiPackages = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
     $VERBOSE_ARG echo "Ensuring pi packages are declared in settings.json"
