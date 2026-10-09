@@ -43,6 +43,38 @@ let
     "ctx_insight"
   ];
 
+  # Cap model context windows for models I use
+  contextLimits = {
+    anthropic = {
+      claude-opus-5-5.contextWindow = 250000;
+      claude-haiku-5-5 = {
+        contextWindow = 128000;
+        reserveTokens = 8000;
+      };
+    };
+    openai-codex = {
+      "gpt-6.1-sol".contextWindow = 250000;
+      gpt-6-luna = {
+        contextWindow = 128000;
+        reserveTokens = 8000;
+      };
+    };
+  };
+
+  modelOverrides = lib.mapAttrs (
+    _: models: lib.mapAttrs (_: limits: { inherit (limits) contextWindow; }) models
+  ) contextLimits;
+
+  compactionOverrides = lib.concatMapAttrs (
+    provider: models:
+    lib.mapAttrs' (
+      model: limits:
+      lib.nameValuePair "${provider}/${model}" {
+        inherit (limits) reserveTokens;
+      }
+    ) (lib.filterAttrs (_: limits: limits ? reserveTokens) models)
+  ) contextLimits;
+
   childAgentInstructions = ''
     You are a child agent working on a task delegated by a parent agent.
     You cannot spawn or manage other subagents. Complete the task yourself;
@@ -120,9 +152,33 @@ in
     tempFile="$(${pkgs.coreutils}/bin/mktemp "$settingsFile.XXXXXX")"
 
     if ${pkgs.jq}/bin/jq \
-      '.defaultProvider = "anthropic" | .defaultModel = "claude-opus-5-5"' \
+      --argjson overrides '${builtins.toJSON compactionOverrides}' \
+      '.defaultProvider = "anthropic"
+        | .defaultModel = "claude-opus-5-5"
+        | .compaction.modelOverrides = $overrides' \
       "$settingsFile" > "$tempFile"; then
       ${pkgs.coreutils}/bin/mv "$tempFile" "$settingsFile"
+    else
+      ${pkgs.coreutils}/bin/rm "$tempFile"
+      exit 1
+    fi
+  '';
+
+  # models.json also holds hand-added custom models, so merge rather than own it.
+  home.activation.configurePiModelLimits = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+    modelsFile="''${HOME}/.pi/agent/models.json"
+    mkdir -p "''${HOME}/.pi/agent"
+    if [ ! -f "$modelsFile" ]; then
+      echo '{}' > "$modelsFile"
+    fi
+    tempFile="$(${pkgs.coreutils}/bin/mktemp "$modelsFile.XXXXXX")"
+
+    if ${pkgs.jq}/bin/jq \
+      --argjson overrides '${builtins.toJSON modelOverrides}' \
+      'reduce ($overrides | to_entries[]) as $p (.;
+        .providers[$p.key].modelOverrides = $p.value)' \
+      "$modelsFile" > "$tempFile"; then
+      ${pkgs.coreutils}/bin/mv "$tempFile" "$modelsFile"
     else
       ${pkgs.coreutils}/bin/rm "$tempFile"
       exit 1
