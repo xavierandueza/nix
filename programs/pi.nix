@@ -115,6 +115,20 @@ in
     ---
   '';
 
+  home.activation.configurePiModel = lib.hm.dag.entryAfter [ "installPiPackages" ] ''
+    settingsFile="''${HOME}/.pi/agent/settings.json"
+    tempFile="$(${pkgs.coreutils}/bin/mktemp "$settingsFile.XXXXXX")"
+
+    if ${pkgs.jq}/bin/jq \
+      '.defaultProvider = "anthropic" | .defaultModel = "claude-opus-5-5"' \
+      "$settingsFile" > "$tempFile"; then
+      ${pkgs.coreutils}/bin/mv "$tempFile" "$settingsFile"
+    else
+      ${pkgs.coreutils}/bin/rm "$tempFile"
+      exit 1
+    fi
+  '';
+
   home.activation.installPiPackages = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
     $VERBOSE_ARG echo "Ensuring pi packages are declared in settings.json"
     # `pi install` spawns npm, which isn't on PATH during activation.
