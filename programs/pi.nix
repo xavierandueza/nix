@@ -129,8 +129,8 @@ in
     description: Codebase exploration and understanding
     display_name: Explore
     tools: ${builtins.toJSON subagentTools}
-    model: openai-codex/gpt-6-luna
-    thinking: max
+    model: anthropic/claude-haiku-5-5
+    thinking: xhigh
     prompt_mode: append
     inherit_context: false
     ---
