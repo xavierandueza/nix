@@ -58,6 +58,7 @@ in
     infisical
     worktrunk
     inputs.llm-agents.packages.${pkgs.system}.handy
+    terraform
   ];
 
   # Global agent instructions.
