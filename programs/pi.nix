@@ -43,24 +43,32 @@ let
     "ctx_insight"
   ];
 
-  # Room beyond max output: pi's 4096-token request safety margin plus one
-  # turn of tool results landing before the pre-request compaction check.
-  compactionHeadroom = 16384;
-
-  workerLimits = rec {
-    contextWindow = 175000;
+  # Hard per-response output cap. Reserve covers it, pi's 4096-token request
+  # safety margin, and slack for pi's token estimate running low.
+  outputLimits = rec {
     maxTokens = 32000;
-    reserveTokens = maxTokens + compactionHeadroom;
+    reserveTokens = maxTokens + 4096 + 8192;
+  };
+
+  mainLimits = outputLimits // {
+    contextWindow = 320000;
+  };
+
+  workerLimits = outputLimits // {
+    contextWindow = 175000;
   };
 
   # Cap model context windows for models I use
   contextLimits = {
     anthropic = {
-      claude-opus-5-5.contextWindow = 320000;
+      claude-opus-5-5 = mainLimits;
       claude-haiku-5-5 = workerLimits;
     };
     openai-codex = {
-      "gpt-6.1-sol".contextWindow = 320000;
+      # Codex's real window is 272K, so it can't share Opus's 320K cap.
+      "gpt-6.1-sol" = mainLimits // {
+        contextWindow = 272000;
+      };
       gpt-6-luna = workerLimits;
     };
   };
