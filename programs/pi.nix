@@ -43,26 +43,30 @@ let
     "ctx_insight"
   ];
 
+  # Room beyond max output: pi's 4096-token request safety margin plus one
+  # turn of tool results landing before the pre-request compaction check.
+  compactionHeadroom = 16384;
+
+  workerLimits = rec {
+    contextWindow = 150000;
+    maxTokens = 32000;
+    reserveTokens = maxTokens + compactionHeadroom;
+  };
+
   # Cap model context windows for models I use
   contextLimits = {
     anthropic = {
-      claude-opus-5-5.contextWindow = 250000;
-      claude-haiku-5-5 = {
-        contextWindow = 128000;
-        reserveTokens = 8000;
-      };
+      claude-opus-5-5.contextWindow = 320000;
+      claude-haiku-5-5 = workerLimits;
     };
     openai-codex = {
-      "gpt-6.1-sol".contextWindow = 250000;
-      gpt-6-luna = {
-        contextWindow = 128000;
-        reserveTokens = 8000;
-      };
+      "gpt-6.1-sol".contextWindow = 320000;
+      gpt-6-luna = workerLimits;
     };
   };
 
   modelOverrides = lib.mapAttrs (
-    _: models: lib.mapAttrs (_: limits: { inherit (limits) contextWindow; }) models
+    _: models: lib.mapAttrs (_: limits: removeAttrs limits [ "reserveTokens" ]) models
   ) contextLimits;
 
   compactionOverrides = lib.concatMapAttrs (
