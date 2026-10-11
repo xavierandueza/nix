@@ -48,7 +48,7 @@ let
   compactionHeadroom = 16384;
 
   workerLimits = rec {
-    contextWindow = 150000;
+    contextWindow = 175000;
     maxTokens = 32000;
     reserveTokens = maxTokens + compactionHeadroom;
   };
