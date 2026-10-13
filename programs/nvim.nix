@@ -23,7 +23,7 @@
         type = "lua";
         config = ''
           require("tokyonight").setup({
-            style = "night",
+            style = "moon",
           })
           vim.cmd.colorscheme("tokyonight")
         '';

@@ -19,8 +19,8 @@
       flake = false;
     };
 
-    herdr-config = {
-      url = "github:xavierandueza/herdr";
+    herdr-worktreeinclude = {
+      url = "github:tanshio/herdr-worktreeinclude";
       flake = false;
     };
 
