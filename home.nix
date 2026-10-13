@@ -20,7 +20,6 @@ in
     ./programs/pi.nix
     ./programs/pix.nix
     ./programs/skills.nix
-    ./programs/slack-mcp.nix
     ./programs/wallpaper.nix
     ./programs/zen.nix
     ./programs/herdr.nix
