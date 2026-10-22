@@ -13,6 +13,7 @@ let
     "npm:context-mode"
     "npm:@narumitw/pi-stamp"
     "npm:@gotgenes/pi-subagents@23.2.0"
+    "npm:pi-claude-bridge"
   ];
 
   # Extension tools require explicit names; only MCP entries support wildcards.
@@ -64,6 +65,10 @@ let
       claude-opus-5-5 = mainLimits;
       claude-haiku-5-5 = workerLimits;
     };
+    claude-bridge = {
+      claude-opus-5-5 = mainLimits;
+      claude-haiku-5-5 = workerLimits;
+    };
     openai-codex = {
       # Codex's real window is 272K, so it can't share Opus's 320K cap.
       "gpt-6.1-sol" = mainLimits // {
@@ -110,6 +115,16 @@ in
 {
   home.packages = [ pi ];
 
+  # The bridge ignores Pi's maxTokens; enforce the cap in Claude Code instead.
+  home.file.".pi/agent/bin/claude-bridge" = {
+    executable = true;
+    text = ''
+      #!${pkgs.runtimeShell}
+      export CLAUDE_CODE_MAX_OUTPUT_TOKENS=${toString outputLimits.maxTokens}
+      exec claude "$@"
+    '';
+  };
+
   home.file.".pi/agent/pi-stamp.json".text = builtins.toJSON {
     hourCycle = "24h";
     timeZone = "Australia/Melbourne";
@@ -123,6 +138,7 @@ in
     unconsumedSessionRetentionMinutes = 20160;
     abortAllOnInterrupt = true;
     midRunUpdates = true;
+    promptInheritance.claude-bridge = "portable";
   };
 
   home.file.".pi/agent/agents/general-purpose.md".text = ''
@@ -141,7 +157,7 @@ in
     description: Codebase exploration and understanding
     display_name: Explore
     tools: ${builtins.toJSON subagentTools}
-    model: anthropic/claude-haiku-5-5
+    model: claude-bridge/claude-haiku-5-5
     thinking: xhigh
     prompt_mode: append
     inherit_context: false
@@ -170,6 +186,52 @@ in
         | .compaction.modelOverrides = $overrides' \
       "$settingsFile" > "$tempFile"; then
       ${pkgs.coreutils}/bin/mv "$tempFile" "$settingsFile"
+    else
+      ${pkgs.coreutils}/bin/rm "$tempFile"
+      exit 1
+    fi
+  '';
+
+  home.activation.configurePiClaudeBridge = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+    bridgeFile="''${HOME}/.pi/agent/claude-bridge.json"
+    mkdir -p "''${HOME}/.pi/agent"
+    if [ ! -f "$bridgeFile" ]; then
+      echo '{}' > "$bridgeFile"
+    fi
+    tempFile="$(${pkgs.coreutils}/bin/mktemp "$bridgeFile.XXXXXX")"
+
+    if ${pkgs.jq}/bin/jq \
+      --arg executable "''${HOME}/.pi/agent/bin/claude-bridge" \
+      '.provider.plan = "pro"
+        | .provider.longContextExtraUsage = false
+        | .provider.pathToClaudeCodeExecutable = $executable
+        | .askClaude.enabled = false' \
+      "$bridgeFile" > "$tempFile"; then
+      ${pkgs.coreutils}/bin/mv "$tempFile" "$bridgeFile"
+    else
+      ${pkgs.coreutils}/bin/rm "$tempFile"
+      exit 1
+    fi
+  '';
+
+  home.activation.configurePiMcp = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+    mcpFile="''${HOME}/.pi/agent/mcp.json"
+    mkdir -p "''${HOME}/.pi/agent"
+    if [ ! -f "$mcpFile" ]; then
+      echo '{}' > "$mcpFile"
+    fi
+    tempFile="$(${pkgs.coreutils}/bin/mktemp "$mcpFile.XXXXXX")"
+
+    if ${pkgs.jq}/bin/jq \
+      --argjson notion '${
+        builtins.toJSON {
+          url = "https://mcp.notion.com/mcp";
+          description = "Search, read, and update Notion workspace content";
+        }
+      }' \
+      '.mcpServers.notion = ((.mcpServers.notion // {}) + $notion)' \
+      "$mcpFile" > "$tempFile"; then
+      ${pkgs.coreutils}/bin/mv "$tempFile" "$mcpFile"
     else
       ${pkgs.coreutils}/bin/rm "$tempFile"
       exit 1
