@@ -100,6 +100,7 @@
             "betterdisplay"
             "keepingyouawake"
             "y3owk1n/tap/neru"
+            "music-decoy"
           ];
         };
 
