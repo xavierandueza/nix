@@ -59,6 +59,7 @@ in
     worktrunk
     inputs.llm-agents.packages.${pkgs.system}.handy
     terraform
+    charm-freeze
   ];
 
   # Global agent instructions.
