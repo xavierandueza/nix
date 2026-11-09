@@ -131,6 +131,15 @@ in
     toolStamps = true;
   };
 
+  home.file.".pi/agent/keybindings.json".text = builtins.toJSON {
+    "tui.input.submit" = "ctrl+enter";
+    "tui.input.newLine" = [
+      "enter"
+      "shift+enter"
+      "ctrl+j"
+    ];
+  };
+
   home.file.".pi/agent/subagents.json".text = builtins.toJSON {
     maxConcurrent = 25;
     defaultMaxTurns = 0;
