@@ -190,7 +190,7 @@ in
 
     if ${pkgs.jq}/bin/jq \
       --argjson overrides '${builtins.toJSON compactionOverrides}' \
-      '.defaultProvider = "anthropic"
+      '.defaultProvider = "claude-bridge"
         | .defaultModel = "claude-opus-5-5"
         | .compaction.modelOverrides = $overrides' \
       "$settingsFile" > "$tempFile"; then
