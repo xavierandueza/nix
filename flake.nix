@@ -28,6 +28,11 @@
       flake = false;
     };
 
+    herdr-worktreeinclude = {
+      url = "github:tanshio/herdr-worktreeinclude";
+      flake = false;
+    };
+
     loops = {
       url = "github:xavierandueza/loops";
       flake = false;

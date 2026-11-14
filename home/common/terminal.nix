@@ -1,30 +1,9 @@
-{ pkgs, osConfig, ... }:
+{ pkgs, ... }:
 
 {
-  home.packages = [
-    pkgs.bluetui
-    pkgs.charm-freeze
-  ];
+  home.packages = [ pkgs.charm-freeze ];
 
   programs = {
-    impala.enable = true;
-
-    ghostty = {
-      enable = true;
-      clearDefaultKeybinds = true; # Never use them
-
-      settings = {
-        font-size = 10;
-        theme = "TokyoNight Moon";
-        clipboard-read = "allow";
-        keybind = [
-          "ctrl+shift+c=copy_to_clipboard"
-          "ctrl+shift+v=paste_from_clipboard"
-          "ctrl+shift+comma=reload_config"
-        ];
-      };
-    };
-
     bash = {
       enable = true;
       enableCompletion = true;
@@ -103,14 +82,8 @@
     lazygit = {
       enable = true;
       enableBashIntegration = true;
-    };
-    docker-cli = {
-      enable = true;
-      contexts.rootless.Endpoints.docker.Host =
-        "unix:///run/user/${toString osConfig.users.users.xavier.uid}/docker.sock";
-      settings.currentContext = "rootless";
+      settings.git.overrideGpg = true;
     };
     lazydocker.enable = true;
-    wiremix.enable = true;
   };
 }

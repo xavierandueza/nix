@@ -261,6 +261,30 @@ in
     fi
   '';
 
+  home.activation.configurePiMcp = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+    mcpFile="''${HOME}/.pi/agent/mcp.json"
+    mkdir -p "''${HOME}/.pi/agent"
+    if [ ! -f "$mcpFile" ]; then
+      echo '{}' > "$mcpFile"
+    fi
+    tempFile="$(${pkgs.coreutils}/bin/mktemp "$mcpFile.XXXXXX")"
+
+    if ${pkgs.jq}/bin/jq \
+      --argjson notion '${
+        builtins.toJSON {
+          url = "https://mcp.notion.com/mcp";
+          description = "Search, read, and update Notion workspace content";
+        }
+      }' \
+      '.mcpServers.notion = ((.mcpServers.notion // {}) + $notion)' \
+      "$mcpFile" > "$tempFile"; then
+      ${pkgs.coreutils}/bin/mv "$tempFile" "$mcpFile"
+    else
+      ${pkgs.coreutils}/bin/rm "$tempFile"
+      exit 1
+    fi
+  '';
+
   home.activation.installPiPackages = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
     $VERBOSE_ARG echo "Ensuring pi packages are declared in settings.json"
     # `pi install` spawns npm, which isn't on PATH during activation.

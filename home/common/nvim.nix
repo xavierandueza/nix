@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, lib, ... }:
 {
   programs.neovim = {
     enable = true;
@@ -239,6 +239,14 @@
           vim.keymap.set("n", "<leader>gr", "<cmd>Octo search is:open is:pr review-requested:@me<cr>", { desc = "PRs awaiting my review (Octo)" })
         '';
       }
+      {
+        plugin = lazygit-nvim;
+        type = "lua";
+        config = ''
+          -- :LazyGit opens in a floating window over the current buffer by default
+          vim.keymap.set("n", "<leader>gg", "<cmd>LazyGit<cr>", { desc = "LazyGit (floating)" })
+        '';
+      }
       # completion sources — loaded before nvim-cmp so it can find them
       cmp-nvim-lsp # LSP completion (inert until a language server is attached)
       cmp-path # filesystem path completion
@@ -372,18 +380,21 @@
       }
     ];
     # Tools wrapped onto neovim's own PATH so conform/nvim-lint always find them.
-    extraPackages = with pkgs; [
-      wl-clipboard # Wayland system clipboard (wl-copy/wl-paste)
-      ripgrep
-      nixfmt
-      statix
-      deadnix
-      nixd # Nix LSP (completion/hover/go-to-def, nixpkgs/flake-aware)
-      vtsls # TypeScript/JavaScript LSP (tsserver wrapper)
-      oxlint # fast JS/TS linter (Rust); nvim-lint has a built-in parser for it
-      ty # Python type checker/LSP (Astral); auto-discovers the project's .venv
-      ruff # Python linter/formatter; fallback when a project has no .venv ruff
-    ];
+    extraPackages =
+      with pkgs;
+      [
+        ripgrep
+        nixfmt
+        statix
+        deadnix
+        nixd # Nix LSP (completion/hover/go-to-def, nixpkgs/flake-aware)
+        vtsls # TypeScript/JavaScript LSP (tsserver wrapper)
+        oxlint # fast JS/TS linter (Rust); nvim-lint has a built-in parser for it
+        ty # Python type checker/LSP (Astral); auto-discovers the project's .venv
+        ruff # Python linter/formatter; fallback when a project has no .venv ruff
+      ]
+      # macOS uses pbcopy/pbpaste, which ship with the OS.
+      ++ lib.optionals pkgs.stdenv.isLinux [ wl-clipboard ];
     initLua = ''
       vim.g.mapleader = " "
       vim.g.maplocalleader = "\\"
@@ -392,7 +403,7 @@
       vim.opt.termguicolors = true
       vim.opt.ignorecase = true
       vim.opt.smartcase = true
-      -- route yanks/deletes/pastes through the Wayland system clipboard
+      -- route yanks/deletes/pastes through the system clipboard
       vim.opt.clipboard = "unnamedplus"
       -- indent with spaces by default (matches what nixfmt/tsserver emit on save)
       vim.opt.expandtab = true

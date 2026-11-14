@@ -71,6 +71,22 @@
         "type": "github"
       }
     },
+    "herdr-worktreeinclude": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1783786378,
+        "narHash": "sha256-FrCFOFUG7vSK8qMFiwu9u7xvKMmbgKbo+HeoEyZNBBU=",
+        "owner": "tanshio",
+        "repo": "herdr-worktreeinclude",
+        "rev": "6da244b314882b4554434a6433156385e38df792",
+        "type": "github"
+      },
+      "original": {
+        "owner": "tanshio",
+        "repo": "herdr-worktreeinclude",
+        "type": "github"
+      }
+    },
     "home-manager": {
       "inputs": {
         "nixpkgs": [
@@ -216,6 +232,7 @@
     "root": {
       "inputs": {
         "agents": "agents",
+        "herdr-worktreeinclude": "herdr-worktreeinclude",
         "home-manager": "home-manager",
         "llm-agents": "llm-agents",
         "loops": "loops",
