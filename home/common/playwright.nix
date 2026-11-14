@@ -3,7 +3,7 @@ let
   # Not in nixpkgs; its bundled Playwright is ahead of nixpkgs' playwright-driver,
   # so on Linux point it at nixpkgs Chromium instead of Playwright-managed browsers.
   # nixpkgs Chromium doesn't build on macOS, so there it uses the installed Chrome.
-  chromiumOverride = lib.optionalString pkgs.stdenv.isLinux ''
+  chromiumOverride = lib.optionalString pkgs.stdenv.hostPlatform.isLinux ''
     export PLAYWRIGHT_MCP_EXECUTABLE_PATH="''${PLAYWRIGHT_MCP_EXECUTABLE_PATH:-${lib.getExe pkgs.chromium}}"
   '';
 

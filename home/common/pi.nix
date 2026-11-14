@@ -6,7 +6,7 @@
   ...
 }:
 let
-  pi = inputs.pi.packages.${pkgs.system}.default;
+  pi = inputs.pi.packages.${pkgs.stdenv.hostPlatform.system}.default;
 
   piPackages = [
     "npm:context-mode"

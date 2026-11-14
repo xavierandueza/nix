@@ -394,7 +394,7 @@
         ruff # Python linter/formatter; fallback when a project has no .venv ruff
       ]
       # macOS uses pbcopy/pbpaste, which ship with the OS.
-      ++ lib.optionals pkgs.stdenv.isLinux [ wl-clipboard ];
+      ++ lib.optionals pkgs.stdenv.hostPlatform.isLinux [ wl-clipboard ];
     initLua = ''
       vim.g.mapleader = " "
       vim.g.maplocalleader = "\\"

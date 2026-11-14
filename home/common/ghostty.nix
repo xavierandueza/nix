@@ -9,7 +9,7 @@
         clipboard-read = "allow";
       };
     }
-    (lib.mkIf pkgs.stdenv.isLinux {
+    (lib.mkIf pkgs.stdenv.hostPlatform.isLinux {
       clearDefaultKeybinds = true; # Never use them
       settings = {
         font-size = 10;
@@ -20,7 +20,7 @@
         ];
       };
     })
-    (lib.mkIf pkgs.stdenv.isDarwin {
+    (lib.mkIf pkgs.stdenv.hostPlatform.isDarwin {
       # nix-darwin installs the app into /Applications/Nix Apps; this only owns the config.
       package = null;
       settings = {

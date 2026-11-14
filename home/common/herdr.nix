@@ -13,7 +13,7 @@ let
 in
 {
   # Keeps the default session alive across logouts and reboots so remote machines can attach.
-  systemd.user.services.herdr = lib.mkIf pkgs.stdenv.isLinux {
+  systemd.user.services.herdr = lib.mkIf pkgs.stdenv.hostPlatform.isLinux {
     Unit = {
       Description = "Herdr server";
       # Restarting on rebuild would kill every pane; restart manually after a Herdr upgrade.
