@@ -1,6 +1,6 @@
 { ... }:
 {
-  sops.defaultSopsFile = ./secrets/secrets.yaml;
+  sops.defaultSopsFile = ../../secrets/secrets.yaml;
   sops.defaultSopsFormat = "yaml";
 
   # Use our provisioned identity, not automatically discovered SSH host keys.

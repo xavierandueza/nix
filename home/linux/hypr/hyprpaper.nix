@@ -10,7 +10,7 @@
           {
             fit_mode = "cover";
             monitor = "";
-            path = "${../../assets/wallpapers/desktop.png}";
+            path = "${../../../assets/wallpapers/desktop.png}";
           }
         ];
       };

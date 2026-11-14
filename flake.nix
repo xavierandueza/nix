@@ -40,13 +40,13 @@
       nixosConfigurations.framework16 = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
         modules = [
-          ./configuration.nix
+          ./hosts/framework16/configuration.nix
           inputs.sops-nix.nixosModules.sops
           home-manager.nixosModules.home-manager
           {
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
-            home-manager.users.xavier = import ./home.nix;
+            home-manager.users.xavier = import ./hosts/framework16/home.nix;
             home-manager.extraSpecialArgs = { inherit inputs; };
             home-manager.backupFileExtension = "backup";
           }

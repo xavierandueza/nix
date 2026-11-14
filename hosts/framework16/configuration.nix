@@ -13,9 +13,9 @@
   imports = [
     # Include the results of the hardware scan.
     ./hardware-configuration.nix
-    ./secrets.nix
-    ./modules/tailscale.nix
-    ./modules/ssh.nix
+    ../../modules/shared/secrets.nix
+    ../../modules/nixos/tailscale.nix
+    ../../modules/nixos/ssh.nix
   ];
 
   nix.settings.experimental-features = [
