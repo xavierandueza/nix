@@ -1,4 +1,9 @@
-{ pkgs, inputs, ... }:
+{
+  pkgs,
+  lib,
+  inputs,
+  ...
+}:
 
 {
   imports = [
@@ -63,7 +68,11 @@
 
   nix.settings.experimental-features = "nix-command flakes";
 
-  system.configurationRevision = inputs.self.rev or inputs.self.dirtyRev or null;
+  # A flake is either clean (rev) or dirty (dirtyRev), never both.
+  system.configurationRevision = lib.mkMerge [
+    (lib.mkIf (inputs.self ? rev) inputs.self.rev)
+    (lib.mkIf (inputs.self ? dirtyRev) inputs.self.dirtyRev)
+  ];
 
   # Used for backwards compatibility, please read the changelog before changing.
   # $ darwin-rebuild changelog

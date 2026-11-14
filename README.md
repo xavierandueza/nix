@@ -11,9 +11,31 @@ Main things that I focus on:
 
 ## macOS bootstrap
 
-```sh
-# Provision the sops age key first (see .sops.yaml), then:
-sudo nix run nix-darwin/master#darwin-rebuild -- switch --flake .
-```
+1. Give the Mac its own sops identity:
 
-After the first switch: `sudo darwin-rebuild switch --flake .`
+   ```sh
+   sudo mkdir -p /var/lib/sops-nix
+   sudo nix shell nixpkgs#age -c age-keygen -o /var/lib/sops-nix/key.txt
+   sudo chmod 600 /var/lib/sops-nix/key.txt
+   sudo nix shell nixpkgs#age -c age-keygen -y /var/lib/sops-nix/key.txt   # public key
+   ```
+
+2. On a machine that can already decrypt (the Framework), add that public key to `.sops.yaml`, then re-encrypt and commit:
+
+   ```sh
+   nix shell nixpkgs#sops -c sops updatekeys secrets/secrets.yaml
+   ```
+
+3. Home Manager now owns `~/.local/bin/claude`, a wrapper that uses the sops setup-token. Move the native installer's symlink out of the way, because Home Manager won't back up symlinks:
+
+   ```sh
+   mv ~/.local/bin/claude ~/.local/bin/claude.native
+   ```
+
+4. First switch:
+
+   ```sh
+   sudo nix run nix-darwin/master#darwin-rebuild -- switch --flake .
+   ```
+
+After that: `sudo darwin-rebuild switch --flake .`
