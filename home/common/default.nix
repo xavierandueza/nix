@@ -9,7 +9,6 @@
     ./loops.nix
     ./nvim.nix
     ./pi.nix
-    ./pix.nix
     ./playwright.nix
     ./skills.nix
     ./terminal.nix
