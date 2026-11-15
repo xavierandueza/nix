@@ -7,7 +7,6 @@
     ./ghostty.nix
     ./herdr.nix
     ./loops.nix
-    ./mcp.nix
     ./nvim.nix
     ./pi.nix
     ./pix.nix
