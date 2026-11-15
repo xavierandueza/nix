@@ -32,25 +32,21 @@
     install_skills langfuse/skills '*'
     install_skills microsoft/playwright-cli playwright-cli
     install_skills readmeio/skills thermo-nuclear-code-quality-review
+    install_skills cursor/plugins \
+      create-verification-skill \
+      maintain-verification-skill
     install_skills mattpocock/skills \
-      codebase-design \
       diagnosing-bugs \
       domain-modeling \
       grill-with-docs \
       implement \
-      improve-codebase-architecture \
       prototype \
       research \
-      resolving-merge-conflicts \
-      setup-matt-pocock-skills \
       tdd \
       to-spec \
       to-tickets \
       wayfinder \
       grilling \
-      handoff \
-      teach \
-      wait-what \
       writing-for-agents
   '';
 }
