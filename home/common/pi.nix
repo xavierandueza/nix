@@ -64,7 +64,7 @@ let
       claude-opus-5-5 = mainLimits;
       claude-haiku-5-5 = workerLimits;
     };
-    openai-codex = {
+    openai = {
       # Codex's real window is 272K, so it can't share Opus's 320K cap.
       "gpt-6.1-sol" = mainLimits // {
         contextWindow = 272000;
