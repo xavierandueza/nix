@@ -6,19 +6,19 @@
       enable = true;
       settings = {
         general = {
-          lock_cmd = "hyprlock";
+          lock_cmd = "pidof hyprlock || hyprlock";
           after_sleep_cmd = "hyprctl dispatch dpms on";
 
         };
         listener = [
           {
-            on-timeout = "hyprlock";
+            on-timeout = "loginctl lock-session";
             timeout = 600;
           }
           {
             on-resume = "hyprctl dispatch dpms on";
             on-timeout = "hyprctl dispatch dpms off";
-            timout = 1500;
+            timeout = 1500;
           }
         ];
       };
