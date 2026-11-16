@@ -6,7 +6,8 @@
       enable = true;
       settings = {
         general = {
-          lock_cmd = "pidof hyprlock || hyprlock";
+          # Own scope so restarting hypridle (e.g. on rebuild) doesn't kill the lock screen
+          lock_cmd = "pidof hyprlock || systemd-run --user --scope hyprlock";
           after_sleep_cmd = "hyprctl dispatch dpms on";
 
         };

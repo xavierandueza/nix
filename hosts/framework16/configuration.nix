@@ -28,6 +28,7 @@
   ];
 
   programs.hyprland.enable = true;
+  security.pam.services.hyprlock = { };
 
   services.greetd = {
     enable = true;

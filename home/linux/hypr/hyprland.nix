@@ -107,6 +107,8 @@
 
         misc = {
           middle_click_paste = false;
+          # Lets a fresh hyprlock take over if the old one dies, instead of a force unlock
+          allow_session_lock_restore = true;
         };
       };
     };
