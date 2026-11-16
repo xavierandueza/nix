@@ -17,6 +17,7 @@
     ../../modules/shared/secrets.nix
     ../../modules/nixos/tailscale.nix
     ../../modules/nixos/ssh.nix
+    ../../modules/nixos/wayvnc.nix
     ../../modules/nixos/nix-access-tokens.nix
     inputs.work.nixosModules.default
   ];
@@ -52,6 +53,9 @@
       Network.NameResolvingService = "systemd";
     };
   };
+
+  # Stay reachable over Tailscale with the lid shut while plugged in
+  services.logind.settings.Login.HandleLidSwitchExternalPower = "ignore";
 
   # Tailscale's preferred Linux DNS
   services.resolved.enable = true;
