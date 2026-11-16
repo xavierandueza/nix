@@ -6,6 +6,7 @@
   config,
   lib,
   pkgs,
+  inputs,
   ...
 }:
 
@@ -16,6 +17,8 @@
     ../../modules/shared/secrets.nix
     ../../modules/nixos/tailscale.nix
     ../../modules/nixos/ssh.nix
+    ../../modules/nixos/nix-access-tokens.nix
+    inputs.work.nixosModules.default
   ];
 
   nix.settings.experimental-features = [
@@ -46,9 +49,12 @@
     enable = true;
     settings = {
       General.EnableNetworkConfiguration = true;
-      Network.NameResolvingService = "resolvconf";
+      Network.NameResolvingService = "systemd";
     };
   };
+
+  # Tailscale's preferred Linux DNS
+  services.resolved.enable = true;
 
   # iwd handles DHCP; stops dhcpcd fighting it on wlan0
   networking.useDHCP = false;

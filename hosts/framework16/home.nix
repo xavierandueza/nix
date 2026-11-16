@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, inputs, ... }:
 
 {
   home.username = "xavier";
@@ -17,5 +17,6 @@
     ../../home/common
     ../../home/linux
     ./zen-browser.nix
+    inputs.work.homeModules.default
   ];
 }
