@@ -527,6 +527,7 @@
         "nixpkgs": "nixpkgs_6",
         "pi": "pi",
         "sops-nix": "sops-nix",
+        "work": "work",
         "y3owk1n-tap": "y3owk1n-tap",
         "zen-browser": "zen-browser"
       }
@@ -650,6 +651,26 @@
       "original": {
         "owner": "numtide",
         "repo": "treefmt-nix",
+        "type": "github"
+      }
+    },
+    "work": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1794820878,
+        "narHash": "sha256-1Rih/lxFC/Pgtz0gXL9HRLFbXrt7qi90y8S7eg2fYcU=",
+        "owner": "xavierandueza",
+        "repo": "work-nix",
+        "rev": "33419e39d62f15337781660d7e0a792522260f5e",
+        "type": "github"
+      },
+      "original": {
+        "owner": "xavierandueza",
+        "repo": "work-nix",
         "type": "github"
       }
     },
