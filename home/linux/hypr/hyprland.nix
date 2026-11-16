@@ -21,6 +21,9 @@
       hl.bind("SUPER + MINUS", hl.dsp.window.resize({ x = -50, y=0, relative = true }));
       hl.bind("SUPER + EQUAL", hl.dsp.window.resize({ x = 50, y=0, relative = true }));
 
+      -- Lid close doesn't suspend on AC, so lock explicitly
+      hl.bind("switch:on:Lid Switch", hl.dsp.exec_cmd("loginctl lock-session"));
+
       -- Window Focus and Movement
       for _, item in ipairs({
         { key = "H", direction = "l" },
