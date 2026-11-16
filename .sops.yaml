@@ -1,3 +1,10 @@
+keys:
+  - &framework16 age19ggsflnvtz2zel3hznq68tfxuf42qej08yhetvwkm8tp309fk4rsawzj6z
+  - &macbook age18xm0sy2tytuf8ln94rm3eayyj247sjdlgn0ykw502jmxevuna4qstuy73t
+
 creation_rules:
   - path_regex: ^secrets/.*\.yaml$
-    age: age19ggsflnvtz2zel3hznq68tfxuf42qej08yhetvwkm8tp309fk4rsawzj6z
+    key_groups:
+      - age:
+          - *framework16
+          - *macbook
