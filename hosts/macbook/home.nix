@@ -38,7 +38,7 @@
     worktrunk
     inputs.llm-agents.packages.${pkgs.stdenv.hostPlatform.system}.handy
     terraform
-    tigervnc
+    remmina
   ];
 
   programs.mise = {

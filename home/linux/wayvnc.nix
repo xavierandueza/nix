@@ -20,6 +20,8 @@ in
       enable_auth = true;
       enable_pam = true;
       rsa_private_key_file = rsaKey;
+      # Enables Apple DH auth for Remmina; only the login is encrypted, Tailscale covers the rest
+      relax_encryption = true;
       # Must match Hyprland's layout or remote keystrokes land on the wrong keys
       xkb_layout = input.kb_layout;
       xkb_variant = input.kb_variant;
