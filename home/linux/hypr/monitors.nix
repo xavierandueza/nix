@@ -11,7 +11,7 @@
 
       -- Monitors
       hl.monitor({
-        output = "edp-1",
+        output = "eDP-1",
         mode = "preferred",
         scale = "auto"
       })
