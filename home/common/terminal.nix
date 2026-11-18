@@ -1,7 +1,10 @@
 { pkgs, ... }:
 
 {
-  home.packages = [ pkgs.charm-freeze ];
+  home.packages = [
+    pkgs.charm-freeze
+    pkgs.jq
+  ];
 
   programs = {
     bash = {
