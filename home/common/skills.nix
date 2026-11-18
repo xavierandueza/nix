@@ -32,6 +32,7 @@
     install_skills langfuse/skills '*'
     install_skills microsoft/playwright-cli playwright-cli
     install_skills readmeio/skills thermo-nuclear-code-quality-review
+    install_skills 'readmeio/skills#xavier/rm-19777-validation-slot-skill' validation-slot
     install_skills cursor/plugins \
       create-verification-skill \
       maintain-verification-skill
