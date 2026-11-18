@@ -7,6 +7,11 @@
     bash = {
       enable = true;
       enableCompletion = true;
+      # Home Manager's own guard is a bare `return`, which leaks the failed test's
+      # status as $? into non-interactive ssh commands (e.g. `ssh host exit` → 1).
+      bashrcExtra = ''
+        [[ $- == *i* ]] || return 0
+      '';
     };
 
     zoxide = {
