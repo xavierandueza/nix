@@ -19,4 +19,7 @@
     ./zen-browser.nix
     inputs.work.homeModules.default
   ];
+
+  # /etc/nixos symlinks to this repo
+  programs.git.settings.safe.directory = "/etc/nixos";
 }

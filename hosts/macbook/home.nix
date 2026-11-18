@@ -9,7 +9,6 @@
   imports = [
     ../../home/common
     ../../home/darwin
-    ./obsidian
     ./zen-browser.nix
   ];
 
@@ -63,14 +62,7 @@
   };
 
   programs.git = {
-    enable = true;
-    settings = {
-      user = {
-        name = "Xavier Andueza";
-        email = "xavier@lyratechnologies.com.au";
-      };
-      gpg.ssh.allowedSignersFile = "${config.home.homeDirectory}/.ssh/allowed_signers";
-    };
+    settings.gpg.ssh.allowedSignersFile = "${config.home.homeDirectory}/.ssh/allowed_signers";
     signing = {
       format = "ssh";
       key = "~/.ssh/id_ed25519.pub";
@@ -82,7 +74,7 @@
 
   # Local trust list for verifying SSH-signed commits (git log --show-signature).
   home.file.".ssh/allowed_signers".text = ''
-    xavier@lyratechnologies.com.au ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPbemigCfIIpc0dhm1lwZDtQdwFN64GN4x+U1yK9bS1E xavier@lyratechnologies.com.au
+    ${config.programs.git.settings.user.email} ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPbemigCfIIpc0dhm1lwZDtQdwFN64GN4x+U1yK9bS1E xavier@lyratechnologies.com.au
   '';
 
   # Make `docker compose` (the plugin subcommand) resolve to `docker-compose`

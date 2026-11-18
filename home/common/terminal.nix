@@ -87,6 +87,14 @@
       };
     };
 
+    # Identity lives per host; gh registers itself as the GitHub credential helper.
+    git = {
+      enable = true;
+      settings.user = {
+        name = "Xavier Andueza";
+        email = "xavier.d.andueza@gmail.com";
+      };
+    };
     gh.enable = true;
     lazygit = {
       enable = true;

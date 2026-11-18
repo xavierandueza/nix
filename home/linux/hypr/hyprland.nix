@@ -71,6 +71,9 @@
       -- Scaling xwayland apps
       hl.env("GDK_SCALE", "2")
       hl.env("XCURSOR_SIZE", "32")
+
+      -- Run nixpkgs-wrapped Electron apps natively on Wayland
+      hl.env("NIXOS_OZONE_WL", "1")
     '';
 
     settings = {
