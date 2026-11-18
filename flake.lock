@@ -183,11 +183,11 @@
     "herdr-include": {
       "flake": false,
       "locked": {
-        "lastModified": 1794987499,
-        "narHash": "sha256-2GrZwFuocW0vwS6YQwzuOuDc4XFEAtsy92GdfNdrCL8=",
+        "lastModified": 1794994652,
+        "narHash": "sha256-Bq+rFc6EedZRXmsRCibd7lJW5VGb7Y87I6AWRYHM3ms=",
         "owner": "xavierandueza",
         "repo": "herdrinclude",
-        "rev": "60ffc5f0bdcf4e709c5727a3b7b8eafe41dc0e4a",
+        "rev": "71f505790b14eb695f3334f35ce6c4ff5ca4917d",
         "type": "github"
       },
       "original": {
