@@ -43,7 +43,7 @@ in
 
   # The home-manager module has no plugin option; linking a pinned store path is idempotent.
   home.activation.linkHerdrPlugins = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-    run ${lib.getExe herdr} plugin link ${inputs.herdr-worktreeinclude} >/dev/null
+    run ${lib.getExe herdr} plugin link ${inputs.herdr-include} >/dev/null
   '';
 
   programs.herdr = {
