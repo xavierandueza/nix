@@ -46,6 +46,12 @@ in
     run ${lib.getExe herdr} plugin link ${inputs.herdr-include} >/dev/null
   '';
 
+  # Repos whose committed .worktreesetup herdrinclude may run.
+  xdg.configFile."herdr/plugins/config/xavierandueza.herdrinclude/trusted-repos".text = ''
+    ~/projects/t0_backend
+    ~/projects/t0_frontend
+  '';
+
   programs.herdr = {
     enable = true;
     package = inputs.llm-agents.packages.${pkgs.stdenv.hostPlatform.system}.herdr;
