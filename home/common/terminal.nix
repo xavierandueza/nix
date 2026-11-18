@@ -10,10 +10,11 @@
     bash = {
       enable = true;
       enableCompletion = true;
-      # Home Manager's own guard is a bare `return`, which leaks the failed test's
-      # status as $? into non-interactive ssh commands (e.g. `ssh host exit` → 1).
+      # Home Manager's guard leaks the failed test as $? into ssh commands
+      # (`ssh host exit` → 1). Bash ignores `return N` in startup files, so `true`
+      # is what resets the status.
       bashrcExtra = ''
-        [[ $- == *i* ]] || return 0
+        [[ $- == *i* ]] || { true; return; }
       '';
     };
 
