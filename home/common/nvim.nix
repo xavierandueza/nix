@@ -405,6 +405,32 @@
       vim.opt.smartcase = true
       -- route yanks/deletes/pastes through the system clipboard
       vim.opt.clipboard = "unnamedplus"
+      -- herdr panes lack WAYLAND_DISPLAY (its server starts before Hyprland) and herdr
+      -- forwards OSC 52 copies but not paste queries, so copy via OSC 52 and paste via wl-paste
+      if vim.env.HERDR_ENV and vim.fn.has("linux") == 1 then
+        local wayland_display = vim.env.WAYLAND_DISPLAY
+        if not wayland_display then
+          local socket = vim.fn.glob(vim.env.XDG_RUNTIME_DIR .. "/wayland-[0-9]", false, true)[1]
+          if socket then
+            wayland_display = vim.fs.basename(socket)
+          end
+        end
+
+        -- no compositor (e.g. attached remotely while logged out): paste what nvim last yanked
+        local paste = function()
+          return { vim.fn.split(vim.fn.getreg(""), "\n"), vim.fn.getregtype("") }
+        end
+        if wayland_display then
+          paste = { "env", "WAYLAND_DISPLAY=" .. wayland_display, "wl-paste", "--no-newline" }
+        end
+
+        local osc52 = require("vim.ui.clipboard.osc52")
+        vim.g.clipboard = {
+          name = "herdr",
+          copy = { ["+"] = osc52.copy("+"), ["*"] = osc52.copy("*") },
+          paste = { ["+"] = paste, ["*"] = paste },
+        }
+      end
       -- indent with spaces by default (matches what nixfmt/tsserver emit on save)
       vim.opt.expandtab = true
       vim.opt.shiftwidth = 2
