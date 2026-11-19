@@ -4,6 +4,7 @@
   home.packages = [
     pkgs.charm-freeze
     pkgs.jq
+    pkgs.lsof
   ];
 
   programs = {
