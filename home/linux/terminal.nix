@@ -1,7 +1,11 @@
 { pkgs, osConfig, ... }:
 
 {
-  home.packages = [ pkgs.bluetui ];
+  home.packages = [
+    pkgs.bluetui
+    pkgs.wl-clipboard
+    pkgs.google-cloud-sdk
+  ];
 
   programs = {
     impala.enable = true;

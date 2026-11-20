@@ -43,6 +43,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    disko = {
+      url = "github:nix-community/disko";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     nix-darwin = {
       url = "github:nix-darwin/nix-darwin/master";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -95,19 +100,26 @@
             ${pkgs.coreutils}/bin/mv -- "$target" "$backup"
           '';
         };
+
+      mkNixos =
+        host: extraModules:
+        nixpkgs.lib.nixosSystem {
+          system = "x86_64-linux";
+          specialArgs = { inherit inputs; };
+          modules = [
+            ./hosts/${host}/configuration.nix
+            inputs.sops-nix.nixosModules.sops
+            home-manager.nixosModules.home-manager
+            homeManager
+            { home-manager.users.xavier = import ./hosts/${host}/home.nix; }
+          ]
+          ++ extraModules;
+        };
     in
     {
-      nixosConfigurations.framework16 = nixpkgs.lib.nixosSystem {
-        system = "x86_64-linux";
-        specialArgs = { inherit inputs; };
-        modules = [
-          ./hosts/framework16/configuration.nix
-          inputs.sops-nix.nixosModules.sops
-          home-manager.nixosModules.home-manager
-          homeManager
-          { home-manager.users.xavier = import ./hosts/framework16/home.nix; }
-        ];
-      };
+      nixosConfigurations.framework16 = mkNixos "framework16" [ ];
+
+      nixosConfigurations.dell = mkNixos "dell" [ inputs.disko.nixosModules.disko ];
 
       # Named after the Mac's hostname so `darwin-rebuild switch --flake .` picks it up.
       darwinConfigurations."Xaviers-MacBook-Pro" = inputs.nix-darwin.lib.darwinSystem {

@@ -3,6 +3,7 @@
 Flake-based NixOS + nix-darwin config, both with Home Manager. One flake, one host per machine:
 
 - `framework16`: Framework 16 running NixOS. This repo is symlinked to `/etc/nixos`.
+- `dell`: Dell laptop running NixOS, LUKS-encrypted and partitioned by disko. Installed with nixos-anywhere (see README).
 - `Xaviers-MacBook-Pro`: MacBook running nix-darwin. The output name matches the Mac's hostname, so `darwin-rebuild` picks it up automatically.
 
 ## Philosophy
@@ -18,7 +19,7 @@ Flake-based NixOS + nix-darwin config, both with Home Manager. One flake, one ho
 ```
 flake.nix          # inputs + nixosConfigurations + darwinConfigurations, shared Home Manager settings
 hosts/<host>/      # one machine: system config, home.nix (stateVersion, host packages), host-only programs
-modules/nixos/     # NixOS system modules
+modules/nixos/     # NixOS system modules; common.nix is shared by every NixOS host
 modules/shared/    # system modules valid on NixOS and nix-darwin (sops secrets)
 home/common/       # Home Manager modules used on every host
 home/linux/        # Home Manager modules that only work on Linux (Hyprland, Wayland tools)
